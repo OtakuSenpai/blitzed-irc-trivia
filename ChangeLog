@@ -1,3 +1,21 @@
+2016-09-05
+
+  I forked this project - Blitzed IRC Trivia from:
+  http://harlequin.sourceforge.net
+  to: https://github.com/andy5995/blitzed-irc-trivia
+
+  Made some minor edits so it would build - I've only tested it on
+  Debian GNU/Linux 8 (Jessie)
+
+  Fixed issues #3 and worked on #1
+  (See https://github.com/andy5995/blitzed-irc-trivia/issues)
+
+  Development version tagged at 0.8.01
+
+  -Andy Alt (andy5995), new project maintainer
+  I am not affiliated with the former developers, and they are not
+  involved with this fork.
+
 VERSION .8
 
   [NOTE: Config files from this version are not
@@ -12,14 +30,14 @@ VERSION .8
   -Trivia notices on join the current question now
   -List not lists by line size (more players per line)
   -Added DIE command to shutdown bot gracefully
-  -Added config and load commands to change 
+  -Added config and load commands to change
        config options and load config files
        respectively.
   -Added uptime command
-  -Added GAME_BasePoints & GAME_TimeWise 
+  -Added GAME_BasePoints & GAME_TimeWise
       which allow points to be given relative
       to time taken to answer question.
-  -Player list is now sorted on list by 
+  -Player list is now sorted on list by
    score, greatest to lowest
   -Added ignore command
 
@@ -44,9 +62,9 @@ VERSION Beta .6
   -Added config directive GAME_AutoRem
   -Fixed join register bug (caused bot to keep reconnecting)
   -Added config directives:
-     GAME_ACTIVITY_Enabled 
-     GAME_ACTIVITY_Count 
-     GAME_ACTIVITY_Time 
+     GAME_ACTIVITY_Enabled
+     GAME_ACTIVITY_Count
+     GAME_ACTIVITY_Time
   -Added ACTIVITY class (activity monitor) (buggy)
 
 Version Beta 0.51
@@ -55,10 +73,10 @@ Version Beta 0.51
   -Moved question functions/handling to question.cpp
   -Cleaned up header file (Now everything is in h.h)
   -Various code cleanups and optimisations
-  
+
   -Added TEXT config directives
   -Added GAME_Points config directive
-  
+
 Version Beta 0.5
   -Cleared  status.joined in Game::reconnect()
   -Made lines a member of Game, and have it only
@@ -70,7 +88,7 @@ Version Beta 0.5
   -Fixed bug where CLIENT_TIME_Timeout was TYPE_STRING not TYPE_INT, oops
   -Added m_ to all member variables
 
-Version ALPHA 0.4 
+Version ALPHA 0.4
 
   -Added config directive CLIENT_TIME_Timeout
   -Added config directive LOG_FromServer
@@ -83,7 +101,7 @@ Version ALPHA 0.4
   -Fix for a loop that occured in RH 7's dodgy libc (Thanks Redhat)
 
 Version ALPHA 0.3 (5/1/01)
-   
+
   -Added function to remove all players
     which is now called by Game::stop()
 
@@ -95,7 +113,7 @@ Version ALPHA 0.3 (5/1/01)
         int   GAME_TIME_QuestionDelay
         int   GAME_TIME_BaseTime
         int   GAME_TIME_StartDelay
-  -Added hint system 
+  -Added hint system
 
 Version ALPHA 0.2 (5/1/01)
 
@@ -105,7 +123,7 @@ Version ALPHA 0.2 (5/1/01)
   -Added safe rejoin and continued attempt at rejoin on kick
   -Config file is now an argument not a predefined
   -Database file is now a config option
-  
+
 
 4/1/01
 
@@ -114,16 +132,16 @@ Version ALPHA 0.2 (5/1/01)
 
 3/1/01
 
-  -Added Game::do_msg() which will not take care of all msg 
+  -Added Game::do_msg() which will not take care of all msg
      parsing instead of doing it in Client::parse_privmsg()
-  -Altered List_players to output 4 per line, this will in the 
+  -Altered List_players to output 4 per line, this will in the
      future be a config option.
   -Made newplayer command obsolete, newplayering is now auto
   -Made check for last n questions asked to avoid recent repeats
   -Created Config class, Config::load() and Config::parse_entry()
 
 2/1/01
-  -Added function Client::parse_newnick and 
+  -Added function Client::parse_newnick and
                   Game::do_newnick
   -Fixed buffersize of q_struct.raw, it was 1/4 the size
    of data coming in from the file! Causing memory corruption.
@@ -133,7 +151,7 @@ Version ALPHA 0.2 (5/1/01)
 
   -Fixed memory leak regarding Parse::get_word()
   -Fixed memory leak regarding Parse::strip_leading()
-  -Made Parse::get_word obsolete and used strtok() instead, 
+  -Made Parse::get_word obsolete and used strtok() instead,
         very messy at the moment and needs cleaning.
   -Check for strlen(strex) < 2 which forces literal string matching.
   -Fixed bug with soundex duplicate letter checking
@@ -156,8 +174,8 @@ Version ALPHA 0.2 (5/1/01)
 
   -Fix for soundex() and duplicates
 
-29/12/00 
+29/12/00
 
   -Added initial timer code
-  -Wrote intelligent string matching algothrim 
+  -Wrote intelligent string matching algothrim
   -Start of worklog
