@@ -1,3 +1,33 @@
+/*
+ * client.h
+ *
+ * Copyright (C) 2001  Erik Fears
+ *
+ * This is a fork of the original project
+ * (http://harlequin.sourceforge.net/)
+ *
+ * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
+ */
+
 #ifndef CLIENT_H
 #define CLIENT_H
 
@@ -13,7 +43,7 @@
 
 
 
-struct ignore_struct 
+struct ignore_struct
 {
    ignore_struct *next;
    char *mask;
@@ -25,11 +55,11 @@ class Game;
 class Client {
 
    public:
-  
+
       Game *game;
       Log *log;
       Parse *parse;
-      Config *config;     
+      Config *config;
 
 
       ignore_struct *ignore;
@@ -61,13 +91,13 @@ class Client {
 
 
 /* Client Actions */
-      void s(int priority,char *data,...);
+      void s(int priority,const char *data,...);
       void sendq();
       void init_socket();
       void connect_to(char *host, int port);
-      void close_socket();      
-      void privmsg(char *target, char *msg,...);
-      void notice(char *target, char *msg,...);
+      void close_socket();
+      void privmsg(char *target, const char *msg,...);
+      void notice(char *target, const char *msg,...);
       void do_register();
       void do_ctcp(source_struct *source, char *target, char *msg);
       void get_from_server();
@@ -99,15 +129,15 @@ private:
           char *data;
 	  int priority;
       } * m_sendq;
-      
+
       int m_sockfd;
       char m_tmpline[RECVSIZE];
-      
+
       struct hostent *m_server_hostname;
       struct sockaddr_in m_server_addr;
       struct hostent *m_localhost;
-      
-      char m_localhostname[256];      
+
+      char m_localhostname[256];
       int m_locallongip;
 
       fd_set m_fdset;

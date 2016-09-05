@@ -1,24 +1,32 @@
 /*
-Copyright (C) 2001  Erik Fears
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-
-      Foundation, Inc.
-      59 Temple Place - Suite 330
-      Boston, MA  02111-1307, USA.
-
-*/
+ * client.cpp
+ *
+ * Copyright (C) 2001  Erik Fears
+ *
+ * This is a fork of the original project
+ * (http://harlequin.sourceforge.net/)
+ *
+ * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
+ */
 
 
 #include "h.h"
@@ -185,7 +193,7 @@ void Client::begin()
 
 }
 
-void Client::s(int priority,char *data,...)
+void Client::s(int priority,const char *data,...)
 {
 
   va_list         arglist;
@@ -282,7 +290,7 @@ void Client::sendq()
 
 }
 
-void Client::privmsg(char *target, char *msg, ...)
+void Client::privmsg(char *target, const char *msg, ...)
 {
   va_list         arglist;
   char            msg2[1024];
@@ -294,7 +302,7 @@ void Client::privmsg(char *target, char *msg, ...)
    s(5,"PRIVMSG %s :%s",target,msg2);
 }
 
-void Client::notice(char *target, char *msg, ...)
+void Client::notice(char *target, const char *msg, ...)
 {
   va_list         arglist;
   char            msg2[1024];

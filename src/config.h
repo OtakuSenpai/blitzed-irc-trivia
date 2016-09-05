@@ -1,3 +1,33 @@
+/*
+ * config.h
+ *
+ * Copyright (C) 2001  Erik Fears
+ *
+ * This is a fork of the original project
+ * (http://harlequin.sourceforge.net/)
+ *
+ * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
+ */
+
 #ifndef CONF_H
 #define CONF_H
 
@@ -23,7 +53,7 @@ public:
    int   CLIENT_TIME_Timeout;
    char *CLIENT_AdminPass;
    char *CTCP_Version;
-   char *GAME_DB;   
+   char *GAME_DB;
    int   GAME_Points;
    int   GAME_BasePoints;
    int   GAME_TimeWise;
@@ -40,7 +70,7 @@ public:
    int   GAME_TIME_Timeout;
    int   GAME_TIME_QuestionDelay;
    int   GAME_TIME_StartDelay;
-   int   GAME_TIME_GiveHint;   
+   int   GAME_TIME_GiveHint;
    int   GAME_SaveState;
    int   LOG_FromServer;
 
@@ -59,8 +89,8 @@ public:
    char *TEXT_GAME_Settings;
    char *TEXT_GAME_Toosmall;
    char *TEXT_GAME_Hint;
-   char *TEXT_GAME_Password;  
-   
+   char *TEXT_GAME_Password;
+
    Config();
    ~Config();
    int load(char *file);

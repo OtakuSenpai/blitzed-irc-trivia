@@ -1,24 +1,32 @@
 /*
-Copyright (C) 2001  Erik Fears        
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-
-      Foundation, Inc.
-      59 Temple Place - Suite 330 
-      Boston, MA  02111-1307, USA.  
-
-*/
+ * game.cpp
+ *
+ * Copyright (C) 2001  Erik Fears
+ *
+ * This is a fork of the original project
+ * (http://harlequin.sourceforge.net/)
+ *
+ * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
+ */
 
 #include "h.h"
 
@@ -27,10 +35,10 @@ Game::Game()
    m_status.question_active  = 0; // initialise status
    m_status.active           = 0;
    m_status.hinted           = 0;
-   m_status.lastlist         = 0;  
+   m_status.lastlist         = 0;
 
    time(&m_start);                //Store time of creation (of object) for uptime
- 
+
 }
 
 Game::~Game()
@@ -38,17 +46,17 @@ Game::~Game()
 }
 
 
-void Game::do_status(source_struct *source, char *args)
+void Game::do_status(source_struct *source, const char *args)
 {
-  
+
 
    client->notice(source->nick,"Questions in %s: %d - UseHint: %d - HintRatio: %d - MinHint: %d - Give Hint after %d seconds - Question timeout after %d seconds - Delay between questions %d seconds - Points needed for win %d -=- Teams : %s - Number of Teams: %d",
-        config->GAME_DB, 
-        question->questions(), 
+        config->GAME_DB,
+        question->questions(),
         config->GAME_UseHint,
         config->GAME_HintRatio,
-        config->GAME_MinHint, 
-        config->GAME_TIME_GiveHint, 
+        config->GAME_MinHint,
+        config->GAME_TIME_GiveHint,
         config->GAME_TIME_Timeout,
         config->GAME_TIME_QuestionDelay,
 	config->GAME_Points,
@@ -59,7 +67,7 @@ void Game::do_status(source_struct *source, char *args)
 
 
 //Very sloppy/quick, needs rewritten!
-void Game::do_uptime(source_struct *source, char *args)
+void Game::do_uptime(source_struct *source, const char *args)
 {
 
     char out[512];
@@ -76,7 +84,7 @@ void Game::do_uptime(source_struct *source, char *args)
     time(&present); //Get current time
     diff = present - m_start; //Calculate time in seconds between now and start
 
-    parse->timeparse(uptime, diff);    
+    parse->timeparse(uptime, diff);
 
 
     if(uptime.weeks)
@@ -86,12 +94,12 @@ void Game::do_uptime(source_struct *source, char *args)
       }
    if(uptime.days)
       {
-        snprintf(tmp, 512, "%dd ", uptime.days); 
+        snprintf(tmp, 512, "%dd ", uptime.days);
         strcat(out, tmp);
       }
    if(uptime.hours)
       {
-        snprintf(tmp, 512, "%dh ", uptime.hours); 
+        snprintf(tmp, 512, "%dh ", uptime.hours);
         strcat(out, tmp);
       }
    if(uptime.minutes)
@@ -101,7 +109,7 @@ void Game::do_uptime(source_struct *source, char *args)
       }
    if(uptime.seconds)
       {
-        snprintf(tmp, 512, "%ds", uptime.seconds); 
+        snprintf(tmp, 512, "%ds", uptime.seconds);
         strcat(out, tmp);
       }
 
@@ -110,7 +118,7 @@ void Game::do_uptime(source_struct *source, char *args)
 }
 
 void Game::do_start(source_struct *source, char *args)
-{     
+{
     start();
 }
 
@@ -123,12 +131,12 @@ void Game::do_newplayer(source_struct *source)
 {
       pi *p;
       ti *t;
-      
+
       player->add_player(source->nick);   //Add player
       p = player->find_pi(source->nick);          //Get newly created player struct
-      
+
       client->notice(source->nick, config->TEXT_GAME_Newplayer);
-      
+
       if(!config->GAME_AutoRem)
          client->notice(source->nick, config->TEXT_GAME_Password ,p->password);
 
@@ -165,7 +173,7 @@ void Game::do_rem(source_struct *source, char *args)
 
   if(!player->is_player(source->nick))
      client->notice(source->nick, config->TEXT_GAME_Notplayer);
-  else 
+  else
    {
      pi *p = player->find_pi(source->nick);
      if(p->ghost)
@@ -194,10 +202,10 @@ void Game::do_channel(source_struct *source,char *target,char *msg)
      return;
 
   if(!strcasecmp(msg, "rem"))
-     do_rem(source, NULL); 
+     do_rem(source, NULL);
   if(!strcasecmp(msg, "list"))
     {
-      if((present - m_status.lastlist) > 30)     
+      if((present - m_status.lastlist) > 30)
        {
          if(!config->GAME_UseTeams)
             list_players(config->IRC_Channel);
@@ -208,7 +216,7 @@ void Game::do_channel(source_struct *source,char *target,char *msg)
     }
   if(!strcasecmp(msg, "status"))
      do_status(source, NULL);
- 
+
   if(!strcasecmp(msg, "uptime"))
      do_uptime(source, NULL);
 
@@ -220,20 +228,20 @@ void Game::do_channel(source_struct *source,char *target,char *msg)
 void Game::do_msg(source_struct *source, char *target, char *cmd, char *rest)
 {
      //Rewrite this code!
- 
+
      char *passwd = strtok(rest, " ");
      char *args = strtok(NULL, "");
-     
+
      if(!cmd || !passwd)
       {
-        client->notice(source->nick, "Password expected for that command"); 
+        client->notice(source->nick, "Password expected for that command");
         return;
       }
-     
+
      if(config->GAME_UseTeams)
         if(!strcasecmp(cmd, "name") && !strcasecmp(passwd, "team"))
            do_nameteam(source, passwd, args);
-      
+
       if(!config->GAME_AutoRem)
        {
           if(!strcasecmp(cmd, "identify"))
@@ -241,7 +249,7 @@ void Game::do_msg(source_struct *source, char *target, char *cmd, char *rest)
           if(!strcasecmp(cmd, "regain"))
             do_regain(source, passwd, args);
        }
- 
+
      if(strcmp(passwd, config->CLIENT_AdminPass)) //Incorrect admin password
        return;
 
@@ -272,17 +280,17 @@ void Game::do_identify(source_struct *source, char *passwd, char *args)
      return;
 
    p = player->find_pi(source->nick);
-  
+
    if(!p)
      return;
-  
+
    if(!strcasecmp(p->password, passwd))
      {
         p->ghost = 0;
         client->notice(source->nick, "Identified. You have %d points in the game.",p->points);      }
    else
         client->notice(source->nick, "Incorrect Password.");
-     
+
 }
 
 
@@ -303,48 +311,48 @@ void Game::do_regain(source_struct *source, char *passwd, char *args)
        client->notice(source->nick, "Regain is disabled during team games");
        return;
     }
- 
+
   if(!target)
    {
       client->notice(source->nick, "No player exists under that nick.");
       return;
    }
-  
+
   if(!target->ghost)
    {
       client->notice(source->nick, "No ghost exists under that nick.");
       return;
    }
-   
+
   if(!strcasecmp(target->password,passwd))
    {
       if(!player->is_player(source->nick))
        {
          player->add_player(source->nick);
-	 
+
 	 p = player->find_pi(source->nick);    //Let them have their old password
 	 strcpy(p->password, target->password);
-	 
-         client->notice(source->nick, config->TEXT_GAME_Newplayer);
-         client->notice(source->nick, config->TEXT_GAME_Password ,p->password);	
 
-       }	
+         client->notice(source->nick, config->TEXT_GAME_Newplayer);
+         client->notice(source->nick, config->TEXT_GAME_Password ,p->password);
+
+       }
       p = player->find_pi(source->nick);
 
-      if(!p)   
+      if(!p)
         return;
-	
+
       p->points += target->points;
       player->del_player(args);
       check_winner();
    }
 
-   
-}	    
+
+}
 
 void Game::do_nameteam(source_struct *source, char *passwd, char *args)
 {
-   
+
    pi *p;
    ti *t;
    time_t present;
@@ -355,16 +363,16 @@ void Game::do_nameteam(source_struct *source, char *passwd, char *args)
      return;
    if(!(t = player->find_ti(p->team)))
      return;
-   
-   
+
+
    if (player->is_lead(source->nick))
     {
        if((present - t->lastname) < 180)
          {
             client->privmsg(source->nick, "You must wait \002%d\002 seconds before changing the team name",180 - (present - t->lastname));
-            return; 
+            return;
 	 }
-    
+
        player->set_name(p->team, args);
        client->privmsg(config->IRC_Channel, "%s has set his Team's name to '\002%s\002'",source->nick, t->name);
     }
@@ -380,7 +388,7 @@ void Game::do_admin_list(source_struct *source, char *args)
     //Can be flooding! Needs rewritten with queue or something
     for(pi *p = player->head;p;p = p->next)
         client->notice(source->nick, "NICK: %s GHOSTPASS: %s GHOSTED: %s POINTS: %d TEAM: %d",p->nick,p->password, (p->ghost) ? "yes" : "no",p->points,p->team);
-   
+
 
 
 }
@@ -425,15 +433,15 @@ void Game::do_set(source_struct *source, char *args)
 {
     char *nick, *value;
     int nvalue;
-    
-    pi *p;  
-   
+
+    pi *p;
+
     nick = value = 0;
     nvalue = 0;
-   
+
     nick   = strtok(args, " ");
     value  = strtok(NULL, "");
- 
+
 
     if(!nick || !value || !m_status.active)
        return;
@@ -441,12 +449,12 @@ void Game::do_set(source_struct *source, char *args)
     nvalue = atoi(value);
 
     if(nvalue < 1)
-     { 
-     
-       if(player->is_player(nick)) 
+     {
+
+       if(player->is_player(nick))
         {
           player->del_player(nick);
-          client->privmsg(config->IRC_Channel, "\002%s\002 has been removed from the game by \002%s\002", nick, source->nick);     
+          client->privmsg(config->IRC_Channel, "\002%s\002 has been removed from the game by \002%s\002", nick, source->nick);
         }
        return;
      }
@@ -454,7 +462,7 @@ void Game::do_set(source_struct *source, char *args)
     if(player->is_player(nick))
        p = player->find_pi(nick);
     else
-     {     
+     {
        player->add_player(nick);
        p = player->find_pi(nick);
      }
@@ -486,7 +494,7 @@ void Game::do_join(source_struct *source, char *target)
    p = player->find_pi(source->nick);
 
    if(p && p->ghost)
-       client->notice(source->nick, "This nick '%s' is ghosted. You must identify to it to regain access to trivia.",source->nick);    
+       client->notice(source->nick, "This nick '%s' is ghosted. You must identify to it to regain access to trivia.",source->nick);
 }
 
 void Game::do_part(source_struct *source, char *target)
@@ -511,11 +519,11 @@ void Game::do_newnick(source_struct *source, char *target)
 {
 
    char *newnick = parse->strip_leading(target);
-   pi *p;  
+   pi *p;
    pi *newp;
-   
+
   if(!source->nick || !newnick)
-     return;   
+     return;
 
   p = player->find_pi(source->nick);
   newp = player->find_pi(newnick);
@@ -527,13 +535,13 @@ void Game::do_newnick(source_struct *source, char *target)
   if(!p && !newp)
     return;
 
-  
+
   if(p)
     if(p->ghost && !newp)
        return;
 
   if(p && !newp && !p->ghost)
-   {     
+   {
      strcpy(p->nick, newnick);
      return;
    }
@@ -551,14 +559,14 @@ void Game::do_newnick(source_struct *source, char *target)
       return;
 
    }
- 
-         
+
+
 }
 
 
 void Game::list_teams(char *target)
 {
- 
+
    player->sort();
 
    if(!player->teams)
@@ -572,11 +580,11 @@ void Game::list_teams(char *target)
     {
        tcount++;
        out[0] = 0;    //Null term string for strcat
-       
+
        if(t->members)
         {
          client->privmsg(target, "[\002%s\002] - \002%d\002 points", t->name,t->points);
-        
+
          for(pi *p = player->head;p;p = p->next)     //Rewrite for efficiency!
           {
 
@@ -589,8 +597,8 @@ void Game::list_teams(char *target)
 	  }
 
 	  client->privmsg(target, out);
-	} 
-	
+	}
+
 
     }
 
@@ -606,7 +614,7 @@ void Game::list_players(char *target)
    pi *p = player->head;
 
    if(!p)
-     return;   
+     return;
 
    int counter = 0;
 
@@ -616,7 +624,7 @@ void Game::list_players(char *target)
    out[0] = 0;
 
 
-   client->privmsg(target, config->TEXT_GAME_Listhead); 
+   client->privmsg(target, config->TEXT_GAME_Listhead);
 
    do
    {
@@ -634,7 +642,7 @@ void Game::list_players(char *target)
           client->privmsg(target, out);
           out[0] = 0;
        }
-    
+
      p = p->next;
 
    } while (p);
@@ -661,7 +669,7 @@ void Game::check_winner()
      }
 
 
-    
+
 
    else
    for(pi *p = player->head;p; p = p->next)
@@ -695,29 +703,29 @@ void Game::check_answer(source_struct *source, char *msg)
 
          if(!player->is_player(source->nick))
             do_newplayer(source);
-       
+
          p = player->find_pi(source->nick);
 
          if(!p)
            {
               log->logtofile("Could not create player struct for %s... terminating\n",source->nick);
-              exit(1); 
+              exit(1);
            }
          if(!(t = player->find_ti(p->team)))
            {
               log->logtofile("Could not get team struct for %s... terminating\n",source->nick);
 	      exit(1);
-    
+
 	   }
 
-         if(config->GAME_TimeWise)     
-             value = (int) (((float) (config->GAME_TIME_Timeout - m_status.timer) / (float) config->GAME_TIME_Timeout) * config->GAME_BasePoints);  
+         if(config->GAME_TimeWise)
+             value = (int) (((float) (config->GAME_TIME_Timeout - m_status.timer) / (float) config->GAME_TIME_Timeout) * config->GAME_BasePoints);
          else
              value = config->GAME_BasePoints;
 
          player->add_point(source->nick, value); //Add point to player and team
 
-	 
+
 	 if(config->GAME_UseTeams)
             client->privmsg(config->IRC_Channel, "That is correct \002%s\002, the answer is %s. %d points scored for '\002%s\002'",source->nick, question->m_question.mainanswer, value, t->name);
 	 else
@@ -760,10 +768,10 @@ log->logtofile("Got back: %s %s\nGot back: %s %s\n",str1,strex1,str2,strex2);
   log->logtofile("soundex1 (%s): %s soundex2 (%s): %s\n",strex1,str1,strex2,str2);
 #endif
 
-  if(type == 0)    
+  if(type == 0)
       if( !strcasecmp(str1,str2) )
            rval = 1;
-  
+
 
   if(type == 1)
    {
@@ -797,26 +805,26 @@ void Game::alarm()
 
   if((m_status.timer > 0) && (!m_status.question_active))
    {
- 
+
       if(config->GAME_ACTIVITY_Enabled && !activity.active(config->GAME_ACTIVITY_Count, config->GAME_ACTIVITY_Time))
        {                     //Activity monitor holds question back...
           m_status.timer = -1;
           return;
        }
 
-       
-      client->s(1,"AWAY"); /* Set us back */ 
-      if(!question->load_question()) 
+
+      client->s(1,"AWAY"); /* Set us back */
+      if(!question->load_question())
        {
           client->privmsg(config->IRC_Channel, "Error in question.db, aborting game.");
           stop();
 	  return;
        }
-	       
+
       m_status.question_active = 1;
       m_status.hinted = 0;
       sprintf(out, config->TEXT_GAME_Question,question->m_question.nick,question->m_question.question);
-      client->privmsg(config->IRC_Channel, out);    
+      client->privmsg(config->IRC_Channel, out);
    }
 
   m_status.timer++;
@@ -832,13 +840,13 @@ void Game::alarm()
         client->privmsg(config->IRC_Channel, config->TEXT_GAME_Timeout_Show,question->m_question.mainanswer);
      else
         client->privmsg(config->IRC_Channel, config->TEXT_GAME_Timeout);
-   }  
+   }
 
 
   if(config->GAME_UseHint)
       if((m_status.timer > config->GAME_TIME_GiveHint) && !m_status.hinted)
-         showhint();                
-    
+         showhint();
+
 
 }
 
@@ -846,7 +854,7 @@ void Game::start()
 {
 
     if(!m_status.active)
-    {   
+    {
          m_status.active = 1;
          client->privmsg(config->IRC_Channel, config->TEXT_GAME_Start ,question->questions(),config->GAME_TIME_StartDelay);
          if(config->GAME_UseHint)
@@ -854,7 +862,7 @@ void Game::start()
              client->privmsg(config->IRC_Channel, config->TEXT_GAME_Settings, config->GAME_HintRatio);
           }
          m_status.timer = -config->GAME_TIME_StartDelay;
-    }   
+    }
 }
 
 void Game::stop()
@@ -878,7 +886,7 @@ void Game::showhint()
    char *out;
    int random, num;
    char *hintanswer;
- 
+
    srand(( unsigned)time(NULL));
 
    // If there is an additional answer then use that one for the hint
@@ -893,16 +901,16 @@ void Game::showhint()
    if((int) strlen(hintanswer) < config->GAME_MinHint)
     {
       client->privmsg(config->IRC_Channel, config->TEXT_GAME_Toosmall);
-      return;  
+      return;
     }
 
      out = strdup(hintanswer);
-    
+
    num = strlen(hintanswer) / config->GAME_HintRatio;
 
    for(int i=0;i < (int)strlen(out);i++)
    {
-      if(out[i] != ' ') 
+      if(out[i] != ' ')
          out[i] = '-';
    }
 
@@ -913,13 +921,13 @@ void Game::showhint()
        do
        {
           random =  1 + (int) ((double)rand() * (strlen(hintanswer) - 1 + 1.0) / (RAND_MAX+1.0));
-    
+
        } while(out[random] == ' ' || out[random] != '-');
 
-        out[random] = hintanswer[random];   
+        out[random] = hintanswer[random];
     }
-   
- 
+
+
    client->privmsg(config->IRC_Channel, config->TEXT_GAME_Hint ,out);
 
    delete [] out;
@@ -927,7 +935,7 @@ void Game::showhint()
 
 int Game::check_adminpass(char *password)
 {
-   
+
    if(!strcmp(password, config->CLIENT_AdminPass))
        return 1;
    else
@@ -952,9 +960,9 @@ void Game::savestate()
     out.write((char *) &m_status.lastlist, sizeof(time_t));
     player->savestate(out);
     question->savestate(out);
-  
+
     out.close();
-  
+
 }
 
 
@@ -976,12 +984,12 @@ void Game::loadstate()
 
     m_status.timer           = -10;
     m_status.question_active = 0;
-    m_status.hinted          = 0;    
+    m_status.hinted          = 0;
 
     player->loadstate(in);     //Load player status
     question->loadstate(in);   //Load question/history status
 
     in.close();
- 
+
 }
 

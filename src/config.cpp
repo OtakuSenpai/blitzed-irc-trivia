@@ -1,24 +1,32 @@
 /*
-Copyright (C) 2001  Erik Fears
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-
-      Foundation, Inc.
-      59 Temple Place - Suite 330
-      Boston, MA  02111-1307, USA.
-
-*/
+ * config.cpp
+ *
+ * Copyright (C) 2001  Erik Fears
+ *
+ * This is a fork of the original project
+ * (http://harlequin.sourceforge.net/)
+ *
+ * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
+ */
 
 #include "h.h"
 
@@ -33,7 +41,7 @@ Config::~Config()
 int Config::load(char *file)
 {
 
-   
+
    ifstream in;
    char line[4096];
    int error = 0;
@@ -62,10 +70,10 @@ int Config::load(char *file)
        if(!(m_table[i].flag))
         {
             error = 1;
-            log->logtofile("Error reading '%s' in config file.\n",m_table[i].name); 
+            log->logtofile("Error reading '%s' in config file.\n",m_table[i].name);
         }
     }
-  
+
    if(error)
     {
        log->logtofile("Terminating due to unrecoverable errors in config file\n");
@@ -100,22 +108,22 @@ int Config::parse_entry(char *entry)
 
    for(int i=0;i < m_size;i++)
    {
-      if(!strcasecmp(m_table[i].name, variable)) 
+      if(!strcasecmp(m_table[i].name, variable))
       {
 #ifdef DEBUG
     log->logtofile("Loading... %s=%s\n",m_table[i].name,value);
 #endif
         switch(m_table[i].type)
-         {   
+         {
             case TYPE_INT:
-                  *(int *)m_table[i].value = strtol(value, &s, 0);                      
+                  *(int *)m_table[i].value = strtol(value, &s, 0);
                   if(m_table[i].value)
                      m_table[i].flag = 1;
                   return 1;
-            case TYPE_STRING: 
+            case TYPE_STRING:
                   if(m_table[i].flag)
-                      delete [] *(char **) m_table[i].value;     
-    
+                      delete [] *(char **) m_table[i].value;
+
                   *(char**)m_table[i].value = strdup(value);
                   if(!m_table[i].value)
                     {
@@ -134,7 +142,7 @@ int Config::parse_entry(char *entry)
                  *(int *)m_table[i].value = num;
                  m_table[i].flag = 1;
                  return 1;
-    
+
          }
       }
    }

@@ -1,3 +1,33 @@
+/*
+ * game.h
+ *
+ * Copyright (C) 2001  Erik Fears
+ *
+ * This is a fork of the original project
+ * (http://harlequin.sourceforge.net/)
+ *
+ * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
+ */
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -14,21 +44,21 @@
 class Client;
 
 class Game {
-  
+
   public:
       Client *client;
       Player *player;
       Parse *parse;
       Log *log;
       Config *config;
-      Question *question;   
+      Question *question;
 
 
       Activity activity;
-      
+
       struct status_struct
        {
-          int active; 
+          int active;
           int question_active;
           int timer;
           int hinted;
@@ -51,11 +81,11 @@ class Game {
       void do_nameteam(source_struct *source, char *passwd,  char *args);
       void do_identify(source_struct *source, char *passwd, char *args);
       void do_regain(source_struct *source, char *passwd, char *args);
-      
+
 /* Channel Commands */
       void do_rem(source_struct *source, char *args);
-      void do_status(source_struct *source, char *args);
-      void do_uptime(source_struct *source, char *args);
+      void do_status(source_struct *source, const char *args);
+      void do_uptime(source_struct *source, const char *args);
 
 /* Handlers for IRC stuff */
       void do_channel(source_struct *source,char *target,char *msg);
@@ -72,7 +102,7 @@ class Game {
       void alarm();
       void list_players(char *target);
       void list_teams(char *target);
-      void reset_scores();     
+      void reset_scores();
       void showhint();
       int string_match(int type, char *str1, char *str2);
       int check_adminpass(char *password);

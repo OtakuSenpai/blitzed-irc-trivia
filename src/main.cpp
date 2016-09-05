@@ -1,25 +1,32 @@
 /*
-Copyright (C) 2001  Erik Fears
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-
-      Foundation, Inc.
-      59 Temple Place - Suite 330 
-      Boston, MA  02111-1307, USA. 
-
-*/
-
+ * main.cpp
+ *
+ * Copyright (C) 2001  Erik Fears
+ *
+ * This is a fork of the original project
+ * (http://harlequin.sourceforge.net/)
+ *
+ * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ *
+ *
+ */
 
 #include "h.h"
 
@@ -83,7 +90,7 @@ config_hash table[] = {
 };
 
 
-int main(int argv, char *args[]) 
+int main(int argv, char *args[])
 {
 
 
@@ -97,7 +104,7 @@ int main(int argv, char *args[])
    client.log    = &log;
    client.config = &config;
 
-   game.parse    = &parse;   
+   game.parse    = &parse;
    game.client   = &client;
    game.log      = &log;
    game.player   = &player;
@@ -108,11 +115,11 @@ int main(int argv, char *args[])
 
    question.config = &config;
    question.parse  = &parse;
-   
+
    config.log    = &log;
 
 /* Check command line args */
- 
+
   if(argv != 2)
    {
       printf("Syntax: trivia config_file\n");
@@ -120,13 +127,13 @@ int main(int argv, char *args[])
    }
 
 
-   
+
 /* Background */
-#ifndef WIN32  
+#ifndef WIN32
    if(pid = fork())
     {
        pidout.open("trivia.pid", ios::out);
-       if(!pidout.fail())         
+       if(!pidout.fail())
             pidout << pid;
        pidout.close();
        exit(0);
@@ -136,7 +143,7 @@ int main(int argv, char *args[])
 /* Load config via table */
    config.m_table = table;
    config.m_size = (sizeof(table) / sizeof(config_hash));
-   if(!config.load(args[1])) 
+   if(!config.load(args[1]))
       exit(1);
 
 /* Prepare Alarm SIGNAL for timer */
