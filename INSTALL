@@ -1,0 +1,8 @@
+View README for more detailed instructions!
+
+     Run the configure script
+     make
+
+     The binary trivia will be in src. Move it to where you are running
+     the bot from, aswell as trivia.conf.sample (or trivia.conf.hourly)
+     and your question database (question.db).

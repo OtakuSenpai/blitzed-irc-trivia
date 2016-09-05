@@ -1,0 +1,19 @@
+TODO:
+
+-- v0.9
+
+   HASH Table Commands (strtok)
+   Question loading code needs more error checking (strtok)
+   Database Integrity Tool (strtok)
+   Better way to identify admin than the current way!
+
+--- Other ideas
+
+    Highscores save to database (strtokK)
+    Bonus question? (strtok)
+    Category Selection? (strtok)
+    Regex matching for question files? (strtok)
+    Line break character for DB (IZS)
+    Bot starts new game after N seconds (IZS)
+    Soundex Force ON/OFF in Config (grifferz)
+    Repeat Question Command (IZS)
