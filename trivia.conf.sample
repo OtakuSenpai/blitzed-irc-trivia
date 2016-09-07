@@ -11,7 +11,7 @@
 #   a hostname or IP address - make sure it allows bots!                   #
 ############################################################################
 
-IRC_Server bots.blitzed.org
+IRC_Server irc.quakenet.org
 
 
 ############################################################################
@@ -31,7 +31,7 @@ IRC_Port 6667
 #  and uses for all game purposes.                                         #
 ############################################################################
 
-IRC_Channel #trivia
+IRC_Channel #blitzed-trivia
 
 
 ############################################################################
@@ -52,7 +52,7 @@ CLIENT_TIME_Timeout 300
 #  server otherwise the bot cannot register.                               #
 ############################################################################
 
-CLIENT_Nick Trivia
+CLIENT_Nick blitzed-bot
 
 
 ##########################################################################
@@ -72,7 +72,7 @@ CLIENT_Username blitzia
 #                                                                        #
 ##########################################################################
 
-CLIENT_Realname Blitzed Trivia C++ 0.8.01 (GPL)
+CLIENT_Realname Blitzed IRC Trivia 0.8.01 (GPL)
 
 
 ##########################################################################
@@ -113,7 +113,7 @@ GAME_DB question.db
 #  0 - no  1 - yes                                                       #
 ##########################################################################
 
-GAME_AutoRem 1
+GAME_AutoRem 0
 
 
 ##########################################################################
@@ -173,7 +173,7 @@ GAME_NumTeams 2
 #  nicks messaging the channel within Time seconds.                      #
 #                                                                        #
 #  Example: If Enabled was set to 1, Count set to 3 and Time set to 60   #
-#  then at least 3 people must have spoken within the last 60 seconds    #
+#  then at least 3 people must have spoken within the last 120 seconds   #
 ##########################################################################
 
 GAME_ACTIVITY_Enabled 0
@@ -182,7 +182,7 @@ GAME_ACTIVITY_Time 120
 
 
 ##########################################################################
-#  GAME_UseHint binary                                                   #                     #                                                                        #
+#  GAME_UseHint binary                                                   #
 #  Enable the hint system?                                               #
 #  1 = Enabled     0 = Disabled                                          #
 ##########################################################################
@@ -246,7 +246,7 @@ GAME_TIME_Timeout 50
 #                                                                        #
 ##########################################################################
 
-GAME_ShowAnswer 0
+GAME_ShowAnswer 1
 
 
 ##########################################################################
