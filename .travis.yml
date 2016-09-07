@@ -9,4 +9,4 @@ script: ./configure && make
 # safelist
 branches:
   only:
-  - devel
+  - develop
