@@ -1,5 +1,5 @@
 /*
- * config.h
+ * blitzed_config.h
  *
  * Copyright (C) 2001  Erik Fears
  *

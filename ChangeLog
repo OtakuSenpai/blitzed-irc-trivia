@@ -9,6 +9,10 @@
 
   Added ".version" channel command
 
+  Added autoheader to configure.ac; a config.h will now be generated
+  during configure, and included with h.h. The existing config.h has
+  been renamed blitzed_config.h
+
 
 2016-09-05
 

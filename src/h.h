@@ -63,10 +63,11 @@ using namespace std;
 #include "options.h"
 #include "parse.h"
 #include "game.h"
-#include "config.h"
+#include "blitzed_config.h"
 #include "client.h"
 #include "question.h"
 #include "player.h"
+#include "config.h"
 
 #ifndef VERSION
 #define VERSION "0.8.01"
