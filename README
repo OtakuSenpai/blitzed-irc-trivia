@@ -9,6 +9,16 @@ of C++'s advanced features are used. The only usage of new C++ features
 in this code is simple class structure, the new operator and
 C++'s iostream library for file io.
 
+Blitzed IRC Trivia web page: https://git.io/vicjS
+
+On Quakenet IRC (irc.quakenet.org):
+discussion and development - #blitzed-trivia-dev
+
+The latest bot is sometimes running on #blitzed-trivia
+
+Any questions about installation and configuring can be sent to
+andyqwerty [at] users [dot] sourceforge [dot] net
+
 INSTALLATION
 ------------
 
@@ -25,12 +35,12 @@ COMMANDS
 --------
           channel:
 
-              .start    - start the game
-              .version  - show version
-              .uptime    - give uptime
-              .status    - give status (display how the game is configured)
-              .list      - list players
-              .rem       - leave game
+              .start      - start the game
+              .version    - show version
+              .uptime     - give uptime
+              .status     - give status (display how the game is configured)
+              .list       - list players
+              .rem        - leave game
 
 
          privmsg:
