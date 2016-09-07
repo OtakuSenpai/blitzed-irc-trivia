@@ -1,16 +1,32 @@
+2016-09-07
+
+  Removed first field (nick) from questions database. The answers no
+  longer begin with "from <nick>.
+
+  Some channel commands are now prefaced by the "." (See README)
+
+  The game can now be started by any user (.start command)
+
+  Added ".version" channel command
+
+
 2016-09-05
 
   I forked this project - Blitzed IRC Trivia from:
   http://harlequin.sourceforge.net
-  to: https://github.com/andy5995/blitzed-irc-trivia
+  to: https://git.io/vicjS
 
   Made some minor edits so it would build - I've only tested it on
   Debian GNU/Linux 8 (Jessie)
 
   Fixed issues #3 and worked on #1
-  (See https://github.com/andy5995/blitzed-irc-trivia/issues)
+  (See https://git.io/vicjS/issues)
 
   Development version tagged at 0.8.01
+
+  Added ~1700 questions
+
+  removed CVS directories
 
   -Andy Alt (andy5995), new project maintainer
   I am not affiliated with the former developers, and they are not

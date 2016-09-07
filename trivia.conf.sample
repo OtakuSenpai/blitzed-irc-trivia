@@ -56,7 +56,7 @@ CLIENT_Nick Trivia
 
 
 ##########################################################################
-#  CLIENT_Username username                                              # 
+#  CLIENT_Username username                                              #
 #                                                                        #
 #  What username the bot should use for IRC. Its usually best to keep    #
 #  this all lowercase                                                    #
@@ -72,14 +72,14 @@ CLIENT_Username blitzia
 #                                                                        #
 ##########################################################################
 
-CLIENT_Realname Blitzed Trivia C++ 0.8 (GPL)
+CLIENT_Realname Blitzed Trivia C++ 0.8.01 (GPL)
 
 
 ##########################################################################
 #  CLIENT_AdminPass                                                      #
 #                                                                        #
 #  Password used for certain admin commands                              #
-#                                                                        #  
+#                                                                        #
 ##########################################################################
 
 CLIENT_AdminPass testpass
@@ -92,7 +92,7 @@ CLIENT_AdminPass testpass
 #                                                                        #
 ##########################################################################
 
-CTCP_Version Blitzed Trivia Version 0.8 (GPL)
+CTCP_Version Blitzed Trivia Version 0.8.01 (GPL)
 
 
 ##########################################################################
@@ -130,13 +130,13 @@ GAME_Points 10
 # GAME_TimeWise binary                                                   #
 #                                                                        #
 # These two options facilitate a timewise point game. In a timewise point#
-# game, players earn points relative to the time it took for them to     # 
+# game, players earn points relative to the time it took for them to     #
 # answer the question (a ratio of timetaken/totaltime x basepoints).     #
 #                                                                        #
 # Set TimeWise to 1 to enable a timewise point game, otherwise the total #
 # of BasePoints will be given for every correct question.                #
 #                                                                        #
-########################################################################## 
+##########################################################################
 
 GAME_BasePoints 1
 GAME_TimeWise 0
@@ -191,29 +191,29 @@ GAME_UseHint 1
 
 
 ##########################################################################
-#  GAME_HintRatio integer                                                #      
-#                                                                        # 
+#  GAME_HintRatio integer                                                #
+#                                                                        #
 #  The hint per character of answer ratio.                               #
-#  Example: If set to 4, there would be 1 character revealed per every 4 # 
+#  Example: If set to 4, there would be 1 character revealed per every 4 #
 ##########################################################################
 
 GAME_HintRatio 4
 
 
 ##########################################################################
-#  GAME_MinHInt integer                                                  #                    
-#                                                                        # 
-#  The minimum length the answer must be for a hint to be administered.  #   
-#  It's probably safe to leave this no more than 5.                      # 
+#  GAME_MinHInt integer                                                  #
+#                                                                        #
+#  The minimum length the answer must be for a hint to be administered.  #
+#  It's probably safe to leave this no more than 5.                      #
 ##########################################################################
 
 GAME_MinHint 5
 
 ##########################################################################
 #  GAME_TIME_StartDelay integer                                          #
-#                                                                        # 
+#                                                                        #
 #  How many seconds until the game starts after being initialised        #
-#                                                                        #  
+#                                                                        #
 ##########################################################################
 
 GAME_TIME_StartDelay 15
@@ -221,9 +221,9 @@ GAME_TIME_StartDelay 15
 
 ##########################################################################
 #  GAME_TIME_GiveHint integer                                            #
-#                                                                        # 
+#                                                                        #
 #  The time in seconds after the question has been administered that     #
-#  a hint will be administered. Keep this below GAME_TIME_Timeout        #  
+#  a hint will be administered. Keep this below GAME_TIME_Timeout        #
 ##########################################################################
 
 GAME_TIME_GiveHint 30
@@ -231,9 +231,9 @@ GAME_TIME_GiveHint 30
 
 ##########################################################################
 #  GAME_TIME_Timeout integer                                             #
-#                                                                        # 
+#                                                                        #
 #  The total amount of time given to answer a question.                  #
-#                                                                        #  
+#                                                                        #
 ##########################################################################
 
 GAME_TIME_Timeout 50
@@ -250,10 +250,10 @@ GAME_ShowAnswer 0
 
 
 ##########################################################################
-#  GAME_TIME_QuestionDelay integer                                       #       
-#                                                                        # 
-#  The amount of time between questions                                  #    
-#                                                                        #  
+#  GAME_TIME_QuestionDelay integer                                       #
+#                                                                        #
+#  The amount of time between questions                                  #
+#                                                                        #
 ##########################################################################
 
 GAME_TIME_QuestionDelay 10
@@ -265,7 +265,7 @@ GAME_TIME_QuestionDelay 10
 #                                                                        #
 #  Save game state to file?                                              #
 #                                                                        #
-##########################################################################   
+##########################################################################
 
 GAME_SaveState 1
 
@@ -299,7 +299,7 @@ TEXT_GAME_Removed You have been removed from the game.
 
 TEXT_GAME_HasLeft %s has left the game.
 
-TEXT_GAME_Listhead - Player List - 
+TEXT_GAME_Listhead - Player List -
 
 TEXT_Game_Listtail - End List, %d Players -
 
@@ -307,13 +307,13 @@ TEXT_GAME_Correct_Answer %d points to %s, who gave the correct answer %s
 
 TEXT_GAME_Winmsg Congratulations to %s who has won this round! What a brain!
 
-TEXT_GAME_Question From %s: %s
+TEXT_GAME_Question  %s
 
 TEXT_GAME_Timeout Sorry no one got that one... next question coming up
 
 TEXT_GAME_Timeout_Show Sorry no one got that one, the answer was %s... next question coming up
 
-TEXT_GAME_Start Welcome to Blitzed-Trivia v0.8 . A new game is starting (%d questions in database). The game will commence in %d seconds.
+TEXT_GAME_Start Welcome to Blitzed-Trivia v0.8.01. A new game is starting (%d questions in database). The game will commence in %d seconds.
 
 TEXT_GAME_Settings Hints Enabled (1 hint : %d letters in answer).
 

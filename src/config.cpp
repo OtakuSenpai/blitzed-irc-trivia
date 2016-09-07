@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
  * This file is part of Blitzed IRC Trivia
- * (https://github.com/andy5995/blitzed-irc-trivia)
+ * (https://git.io/vicjS)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
