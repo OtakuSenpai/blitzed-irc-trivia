@@ -6,6 +6,7 @@
   Game will no longer abort if it encounters a "bad" question. If it
   encounters 3 bad questions in a row, the game round will stop.
 
+  Added .help channel command
 
 2016-09-07
 
