@@ -1,2 +1,7 @@
 SUBDIRS = src
 AUTOMAKE_OPTIONS = foreign
+
+ACLOCAL = true
+AUTOCONF = true
+AUTOHEADER = true
+AUTOMAKE = true

@@ -120,4 +120,23 @@ public:
 
 };
 
+enum {
+  CMD_START,
+  CMD_LIST,
+  CMD_REM,
+  CMD_STATUS,
+  CMD_UPTIME,
+  CMD_VERSION,
+  CMD_HELP
+};
+
+#define CMD_ITEMS 7
+
+struct cmd
+{
+  char str[11];
+  short val;
+  char desc[81];
+};
+
 #endif

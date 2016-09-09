@@ -41,6 +41,7 @@ COMMANDS
               .status     - give status (display how the game is configured)
               .list       - list players
               .rem        - leave game
+              .help       - display help
 
 
          privmsg:

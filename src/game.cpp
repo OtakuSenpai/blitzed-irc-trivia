@@ -61,7 +61,16 @@ Game::do_status (source_struct * source, const char *args)
                   config->GAME_NumTeams);
 }
 
-
+struct cmd channel_commands[CMD_ITEMS] = {
+  {".start", CMD_START,
+   "start a game round if there isn't one already running"},
+  {".list", CMD_LIST, "list players"},
+  {".rem", CMD_REM, "leave game (remove self)"},
+  {".status", CMD_STATUS, "display the game configuration"},
+  {".uptime", CMD_UPTIME, "show uptime"},
+  {".version", CMD_VERSION, "list players"},
+  {".help", CMD_HELP, "show help"},
+};
 
 //Very sloppy/quick, needs rewritten!
 void
@@ -209,36 +218,71 @@ Game::do_channel (source_struct * source, char *target, char *msg)
   if (!source->nick || !msg)
     return;
 
-  if (!strcasecmp (msg, ".rem"))
-    do_rem (source, NULL);
-  if (!strcasecmp (msg, ".list"))
+  short check_for_cmd;
+  bool cmd_found = 0;
+
+  for (check_for_cmd = 0; check_for_cmd < CMD_ITEMS; check_for_cmd++)
   {
-    if ((present - m_status.lastlist) > 30)
+    if (strcasecmp (msg, channel_commands[check_for_cmd].str) == 0)
     {
-      if (!config->GAME_UseTeams)
-        list_players (config->IRC_Channel);
-      else
-        list_teams (config->IRC_Channel);
-      time (&(m_status.lastlist));
+      cmd_found = 1;
+
+      switch (check_for_cmd)
+      {
+      case CMD_START:
+        if (!m_status.active)
+          start ();
+        break;
+
+      case CMD_LIST:
+        if ((present - m_status.lastlist) > 30)
+        {
+          if (!config->GAME_UseTeams)
+            list_players (config->IRC_Channel);
+          else
+            list_teams (config->IRC_Channel);
+          time (&(m_status.lastlist));
+        }
+        break;
+
+      case CMD_REM:
+        do_rem (source, NULL);
+        break;
+
+      case CMD_STATUS:
+        do_status (source, NULL);
+        break;
+
+      case CMD_UPTIME:
+        do_uptime (source, NULL);
+        break;
+
+      case CMD_VERSION:
+        client->privmsg (config->IRC_Channel, "%s", VERSION);
+        client->privmsg (config->IRC_Channel, "Author: Andy Alt ");
+        client->privmsg (config->IRC_Channel,
+                         "/ Blitzed IRC Trivia home page: https://git.io/vicjS");
+        break;
+
+      case CMD_HELP:
+        short help_item;
+        for (help_item = 0; help_item < CMD_ITEMS; help_item++)
+        {
+          client->privmsg (config->IRC_Channel, "%s\t\t%s",
+                           channel_commands[help_item].str,
+                           channel_commands[help_item].desc);
+        }
+        break;
+
+      default:
+        break;
+      }
+
     }
+
+    if (cmd_found)
+      break;
   }
-  if (!strcasecmp (msg, ".status"))
-    do_status (source, NULL);
-
-  if (!strcasecmp (msg, ".uptime"))
-    do_uptime (source, NULL);
-
-  if (!strcasecmp (msg, ".version"))
-  {
-    client->privmsg (config->IRC_Channel, "%s", VERSION);
-    client->privmsg (config->IRC_Channel, "Author: Andy Alt ");
-    client->privmsg (config->IRC_Channel,
-        "/ Blitzed IRC Trivia home page: https://git.io/vicjS");
-  }
-
-  if (!strcasecmp (msg, ".start"))
-    if (!m_status.active)
-      start ();
 
   if (m_status.question_active && m_status.active)
     check_answer (source, msg);
@@ -643,8 +687,8 @@ Game::list_teams (char *target)
 
     if (t->members)
     {
-      client->privmsg (target, "[\002%s\002] - \002%d\002 points", t->name,
-                       t->points);
+      client->privmsg (target, "[\002%s\002] - \002%d\002 points",
+                       t->name, t->points);
 
       for (pi * p = player->head; p; p = p->next)       //Rewrite for efficiency!
       {
@@ -777,15 +821,15 @@ Game::check_answer (source_struct * source, char *msg)
 
       if (!p)
       {
-        log->
-          logtofile ("Could not create player struct for %s... terminating\n",
-                     source->nick);
+        log->logtofile
+          ("Could not create player struct for %s... terminating\n",
+           source->nick);
         exit (1);
       }
       if (!(t = player->find_ti (p->team)))
       {
-        log->logtofile ("Could not get team struct for %s... terminating\n",
-                        source->nick);
+        log->logtofile
+          ("Could not get team struct for %s... terminating\n", source->nick);
         exit (1);
 
       }
@@ -804,8 +848,8 @@ Game::check_answer (source_struct * source, char *msg)
       if (config->GAME_UseTeams)
         client->privmsg (config->IRC_Channel,
                          "That is correct \002%s\002, the answer is %s. %d points scored for '\002%s\002'",
-                         source->nick, question->m_question.mainanswer, value,
-                         t->name);
+                         source->nick, question->m_question.mainanswer,
+                         value, t->name);
       else
         client->privmsg (config->IRC_Channel,
                          config->TEXT_GAME_Correct_Answer, value,
@@ -928,8 +972,7 @@ Game::alarm ()
         ctr++;
         /** FIXME: The line number needs to be shown, or logged to a file
          */
-        client->privmsg (config->IRC_Channel,
-                        "Error in question.db");
+        client->privmsg (config->IRC_Channel, "Error in question.db");
 
       /** If this happens more than 3 times in a row, the database is
         * probably corrupt. Abort instead of possibly sending an infinite
@@ -947,8 +990,7 @@ Game::alarm ()
     m_status.question_active = 1;
     m_status.hinted = 0;
 
-    sprintf (out, config->TEXT_GAME_Question,
-             question->m_question.question);
+    sprintf (out, config->TEXT_GAME_Question, question->m_question.question);
 
     client->privmsg (config->IRC_Channel, out);
   }
