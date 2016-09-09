@@ -1,3 +1,12 @@
+2016-09-08
+
+  bugfix: Questions shorter than QUESTIONMAX should no longer cause
+  a segfault (when longer than 256 chars).
+
+  Game will no longer abort if it encounters a "bad" question. If it
+  encounters 3 bad questions in a row, the game round will stop.
+
+
 2016-09-07
 
   Removed first field (nick) from questions database. The answers no
