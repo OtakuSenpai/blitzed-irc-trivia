@@ -142,4 +142,8 @@ HOW ANSWER MATCHING WORKS
     type 0. The phonetic algothrim is very very tolerant to
     vowels.
 
+    A screenshot that demonstrates phonetic matching can be found
+    on the screenshots branch:
+    https://github.com/andy5995/blitzed-irc-trivia/tree/screenshots
+
 

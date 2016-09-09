@@ -10,7 +10,7 @@
 /* Size of a nick from IRC */
 #define NICKMAX 32
 /* Max size of a question line*/
-#define QUESTIONMAX 1024   
+#define QUESTIONMAX 1024
 /* Size of ghost password*/
 #define PASSMAX 4
 /* Max size of team name */

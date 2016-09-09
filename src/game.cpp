@@ -884,7 +884,7 @@ void
 Game::alarm ()
 {
 
-  char out[256];
+  char out[QUESTIONMAX + 1];
 
   if (!m_status.active)
     return;
@@ -910,20 +910,46 @@ Game::alarm ()
       return;
     }
 
-
     client->s (1, "AWAY");      /* Set us back */
-    if (!question->load_question ())
+
+    short ctr = 0;
+    bool ok = 0;
+
+    while (!ok)
     {
-      client->privmsg (config->IRC_Channel,
-                       "Error in question.db, aborting game.");
-      stop ();
-      return;
+      if (question->load_question ())
+      {
+        ok = 1;
+        ctr = 0;
+      }
+
+      else
+      {
+        ctr++;
+        /** FIXME: The line number needs to be shown, or logged to a file
+         */
+        client->privmsg (config->IRC_Channel,
+                        "Error in question.db");
+
+      /** If this happens more than 3 times in a row, the database is
+        * probably corrupt. Abort instead of possibly sending an infinite
+        * amount of errors to the channel
+        */
+        if (ctr >= 3)
+        {
+          ctr = 0;
+          stop ();
+          return;
+        }
+      }
     }
 
     m_status.question_active = 1;
     m_status.hinted = 0;
+
     sprintf (out, config->TEXT_GAME_Question,
              question->m_question.question);
+
     client->privmsg (config->IRC_Channel, out);
   }
 

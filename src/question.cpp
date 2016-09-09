@@ -33,7 +33,7 @@
 #include "options.h"
 #include "parse.h"
 #include "game.h"
-#include "config.h"
+#include "blitzed_config.h"
 #include "client.h"
 #include "question.h"
 
@@ -69,6 +69,13 @@ Question::load_question ()
       1 + (int) ((double) rand () * (m_lines - 1 + 1.0) / (RAND_MAX + 1.0));
     log->logtofile ("Debug: Random Line # %d\n", rand_line);
 
+    /**
+     * FIXME:
+     *
+     * Even with resize_history (), there is still the possibility of an
+     * infinite loop
+     */
+
     if (in_history (rand_line))
       rand_line = 0;
 
@@ -82,23 +89,17 @@ Question::load_question ()
   if (in.fail ())
     return 0;
 
-
-  /*  ssize_t get_err; */
-
   for (int i = 0; i < rand_line; i++)
   {
     in.getline (m_question.raw, QUESTIONMAX, '\n');
-  }
-/*
-     if (get_err < 3)
-     {
-       rand_line = 0;
-       break;
-     }
-   }
 
-  if (get_err < 3)
-      continue; */
+    /** FIXME:
+     *
+     * print a message somewhere that the line is too long
+     */
+    if (in.fail ())
+      return 0;
+  }
 
   m_question.answers = 0;
 
@@ -111,8 +112,6 @@ Question::load_question ()
    */
   m_question.answers -= 2;
 
-
-  /* m_question.nick = strtok (m_question.raw, ";"); */
   m_question.type = atoi (strtok (m_question.raw, ";"));
   m_question.question = strtok (NULL, ";");
 
@@ -147,7 +146,6 @@ Question::load_question ()
   in.close ();
   return 1;                     //No errors
 }
-
 
 int
 Question::questions ()
