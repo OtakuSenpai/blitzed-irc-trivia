@@ -261,7 +261,7 @@ Game::do_channel (source_struct * source, char *target, char *msg)
         client->privmsg (config->IRC_Channel, "%s", VERSION);
         client->privmsg (config->IRC_Channel, "Author: Andy Alt ");
         client->privmsg (config->IRC_Channel,
-                         "/ Blitzed IRC Trivia home page: https://git.io/vicjS");
+                         "/ Blitzed IRC Trivia home page: https://git.io/vi04F");
         break;
 
       case CMD_HELP:

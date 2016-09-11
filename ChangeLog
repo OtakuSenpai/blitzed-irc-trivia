@@ -1,3 +1,7 @@
+2016-09-10
+
+  Changed home page (now using the wiki at https://git.io/vi04F)
+
 2016-09-08
 
   bugfix: Questions shorter than QUESTIONMAX should no longer cause
