@@ -11,37 +11,33 @@ New Forum! http://ost.io/@andy5995/blitzed-irc-trivia
 To have your Trivia channel added to the wiki, please get in touch
 with me via the contact methods listed on the home page.
 
-Notable changes:  The .help command
-
-                  The .start command can be used by any user
-
-                  Fixed crash if question line was greater than 256 characters
-
-                  Game will no longer abort if it encounters a "bad" question.
-                  If it encounters 3 bad questions in a row, the game round
-                  will stop.
-
-                  Various other minor bug fixes (See ChangeLog) or click
-                  the "closed" link on the Issues page.
+* Notable changes:
+  * The .help command shows which channel commands can be used.
+  * The .start command can be used by any user
+  * Fixed crash if question line was greater than 256 characters
+  * Game will no longer abort if it encounters a "bad" question.
+    If it encounters 3 bad questions in a row, the game round will stop.
+  * Various other minor bug fixes (See ChangeLog) or click the "closed"
+    link on the Issues page.
 
 
-The database:     One field removed from the database. Please see the
-                  instructions at
-                  http://ost.io/@andy5995/blitzed-irc-trivia/topics/217
-                  to use a database designed for versions v0.8.0
+* The database
+  * One field removed from the database. Please see the instructions at
+    http://ost.io/@andy5995/blitzed-irc-trivia/topics/217
+    to use a database designed for versions v0.8.0 or below.
 
-The config file:  Two options were removed from the config file: CTCP
-                  Version and Realname. These are now hard-coded into
-                  the program.
 
-                  Some minor changes made to some of the text
+* The config file:
+  * Two options were removed from the config file: CTCP Version and Realname.
+    These are now hard-coded into the program.
+  * Some minor changes made to some of the text
 
-                  It is strongly recommended to copy any unique settings
-                  from your existing trivia.conf and use the new one.
+_It is strongly recommended to copy any unique settings from your existing
+trivia.conf and use the new one._
 
-                  1. Make a copy of your trivia.conf
-                  2. Copy trivia.conf.sample to trivia.conf
-                  3. Edit the file to suit your needs
+1. Make a copy of your trivia.conf
+2. Copy trivia.conf.sample to trivia.conf
+3. Edit the file to suit your needs
 
 I promise I will do my best as development of Blitzed moves forward. Strtok
 and others (see AUTHORS file) did an excellent job designing this program,
