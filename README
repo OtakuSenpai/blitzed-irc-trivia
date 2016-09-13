@@ -24,6 +24,9 @@ INSTALLATION
          move this file, your trivia.conf file and your question.db
          file to any directory of your choice to run the bot in.
 
+         The question database MUST be in the same directory from which
+         'trivia' run.
+
 
 COMMANDS
 --------

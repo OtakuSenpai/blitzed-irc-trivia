@@ -1,3 +1,17 @@
+2016-09-13
+
+    .help now shows in a private message window
+
+    bugfix: if the questions.db file is not present, or encounters
+    some other error while opening, the game is automatically stopped
+    (in the future, Blitzed will exit instead. Please contribute patch if
+    that type of thing interests you).
+
+    I'm trying out a new forum at http://ost.io/@andy5995/blitzed-irc-trivia
+    The old one is under strtok's SF account so I don't have any admin
+    privileges there.
+
+
 2016-09-10
 
   Changed home page (now using the wiki at https://git.io/vi04F)
