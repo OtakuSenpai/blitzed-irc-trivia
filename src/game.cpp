@@ -958,16 +958,19 @@ Game::alarm ()
 
     short ctr = 0;
     bool ok = 0;
+    int good = 0;
 
     while (!ok)
     {
-      if (question->load_question ())
+      good = (question->load_question ());
+
+      if (good == 1)
       {
         ok = 1;
         ctr = 0;
       }
 
-      else
+      else if (good == 0)
       {
         ctr++;
         /** FIXME: The line number needs to be shown, or logged to a file
@@ -984,6 +987,12 @@ Game::alarm ()
           stop ();
           return;
         }
+      }
+
+      else if (good == -1)
+      {
+        stop();
+        return;
       }
     }
 
@@ -1040,11 +1049,15 @@ Game::start ()
 void
 Game::stop ()
 {                               //Remove players, stop timers, set game to 0
+  client->privmsg (config->IRC_Channel, "Stopping game...");
+
   player->remove_all ();
   player->clear_teams ();
   m_status.active = 0;
   m_status.question_active = 0;
   m_status.timer = 0;
+
+  client->privmsg (config->IRC_Channel, "The game has been stopped. Use '.start' to begin a new round");
 }
 
 void

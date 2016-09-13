@@ -87,7 +87,10 @@ Question::load_question ()
   in.open (config->GAME_DB, ios::in);
 
   if (in.fail ())
-    return 0;
+  {
+    printf ("Error while opening %s\n", config->GAME_DB);
+    return -1;
+  }
 
   for (int i = 0; i < rand_line; i++)
   {
