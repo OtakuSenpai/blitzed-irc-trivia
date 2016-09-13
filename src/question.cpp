@@ -67,7 +67,10 @@ Question::load_question ()
   {
     rand_line =
       1 + (int) ((double) rand () * (m_lines - 1 + 1.0) / (RAND_MAX + 1.0));
+
+#ifdef DEBUG
     log->logtofile ("Debug: Random Line # %d\n", rand_line);
+#endif
 
     /**
      * FIXME:
