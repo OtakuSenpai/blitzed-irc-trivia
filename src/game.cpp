@@ -268,7 +268,7 @@ Game::do_channel (source_struct * source, char *target, char *msg)
         short help_item;
         for (help_item = 0; help_item < CMD_ITEMS; help_item++)
         {
-          client->privmsg (config->IRC_Channel, "%s\t\t%s",
+          client->privmsg (source->nick, "%s\t\t%s",
                            channel_commands[help_item].str,
                            channel_commands[help_item].desc);
         }

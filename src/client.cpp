@@ -335,7 +335,7 @@ Client::do_register ()
   s (100, "NICK %s", config->CLIENT_Nick);
   s (100, "USER %s \"%s\" %s :%s", config->CLIENT_Username,
      config->CLIENT_Username, config->CLIENT_Username,
-     config->CLIENT_Realname);
+     PACKAGE_STRING);
 
 }
 
@@ -791,8 +791,7 @@ Client::do_ctcp (source_struct * source, char *target, char *msg)
 
 
   if (!strcasecmp (ctcp, "VERSION"))
-    s (5, "NOTICE %s :\001VERSION %s\001", source->nick,
-       config->CTCP_Version);
+    s (5, "NOTICE %s :\001VERSION %s %s\001", source->nick, PACKAGE_NAME, VERSION);
 
   if (!ctcp2)
     return;

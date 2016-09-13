@@ -1,4 +1,4 @@
-AC_INIT(trivia, 0.8.01)
+AC_INIT(Blitzed IRC Trivia, 0.8.11)
 AC_CONFIG_SRCDIR(src/client.h)
 AM_INIT_AUTOMAKE
 AC_PROG_CC

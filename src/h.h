@@ -70,7 +70,7 @@ using namespace std;
 #include "config.h"
 
 #ifndef VERSION
-#define VERSION "0.8.01"
+#define VERSION "0.8.11"
 #endif
 
 #endif /* #ifndef H_H */

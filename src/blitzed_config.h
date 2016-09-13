@@ -49,10 +49,8 @@ public:
    char *IRC_Channel;
    char *CLIENT_Nick;
    char *CLIENT_Username;
-   char *CLIENT_Realname;
    int   CLIENT_TIME_Timeout;
    char *CLIENT_AdminPass;
-   char *CTCP_Version;
    char *GAME_DB;
    int   GAME_Points;
    int   GAME_BasePoints;
