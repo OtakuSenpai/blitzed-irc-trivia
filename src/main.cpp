@@ -6,7 +6,7 @@
  * This is a fork of the original project
  * (http://harlequin.sourceforge.net/)
  *
- * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
  * This file is part of Blitzed IRC Trivia
  * (https://git.io/vicjS)
  *
@@ -47,10 +47,8 @@ config_hash table[] = {
       { "IRC_Channel"             ,  TYPE_STRING  ,0,   &(config.IRC_Channel)              },
       { "CLIENT_Nick"             ,  TYPE_STRING  ,0,   &(config.CLIENT_Nick)              },
       { "CLIENT_Username"         ,  TYPE_STRING  ,0,   &(config.CLIENT_Username)          },
-      { "CLIENT_Realname"         ,  TYPE_STRING  ,0,   &(config.CLIENT_Realname)          },
       { "CLIENT_TIME_Timeout"     ,  TYPE_INT     ,0,   &(config.CLIENT_TIME_Timeout)      },
       { "CLIENT_AdminPass"        ,  TYPE_STRING  ,0,   &(config.CLIENT_AdminPass)         },
-      { "CTCP_Version"            ,  TYPE_STRING  ,0,   &(config.CTCP_Version)             },
       { "GAME_DB"                 ,  TYPE_STRING  ,0,   &(config.GAME_DB)                  },
       { "GAME_Points"             ,  TYPE_INT     ,0,   &(config.GAME_Points)              },
       { "GAME_BasePoints"         ,  TYPE_INT     ,0,   &(config.GAME_BasePoints)          },

@@ -6,7 +6,7 @@
  * This is a fork of the original project
  * (http://harlequin.sourceforge.net/)
  *
- * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
  * This file is part of Blitzed IRC Trivia
  * (https://git.io/vicjS)
  *
@@ -70,7 +70,7 @@ using namespace std;
 #include "config.h"
 
 #ifndef VERSION
-#define VERSION "0.8.01"
+#define VERSION "0.8.11"
 #endif
 
 #endif /* #ifndef H_H */

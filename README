@@ -1,24 +1,17 @@
 INTRODUCTION
 ------------
      In September of 2016, I forked this project, which hadn't been
-developed in about 16 years. The original project page is
- (http://harlequin.sourceforge.net/
+developed in about 16 years.
 
-     While this project is labeled this project as C++, very little
-of C++'s advanced features are used. The only usage of new C++ features
-in this code is simple class structure, the new operator and
-C++'s iostream library for file io.
+     While this project is labeled as C++, very little of C++'s advanced
+features are used. The only usage of new C++ features in this code is
+simple class structure, the new operator and C++'s iostream library for
+file io.
 
-Blitzed IRC Trivia web page: https://git.io/vicjS
-Forum: http://ost.io/@andy5995/blitzed-irc-trivia
-
-On Quakenet IRC (irc.quakenet.org):
-discussion and development - #blitzed-trivia-dev
-
-The latest bot is sometimes running on #blitzed-trivia
+Blitzed IRC Trivia web page: https://git.io/vi04F
 
 Any questions about installation and configuring can be sent to
-andyqwerty [at] users [dot] sourceforge [dot] net
+andy400-dev@yahoo.com or using the contact methods listed on the home page.
 
 INSTALLATION
 ------------
@@ -30,6 +23,9 @@ INSTALLATION
    Note: It will compile the binary program to ./src/trivia. You can
          move this file, your trivia.conf file and your question.db
          file to any directory of your choice to run the bot in.
+
+         The question database MUST be in the same directory from which
+         'trivia' run.
 
 
 COMMANDS
@@ -144,8 +140,5 @@ HOW ANSWER MATCHING WORKS
     type 0. The phonetic algothrim is very very tolerant to
     vowels.
 
-    A screenshot that demonstrates phonetic matching can be found
-    on the screenshots branch:
-    https://github.com/andy5995/blitzed-irc-trivia/tree/screenshots
 
-
+    This file last updated 2016-09-10

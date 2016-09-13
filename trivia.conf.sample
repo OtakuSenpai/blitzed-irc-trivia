@@ -66,16 +66,6 @@ CLIENT_Username blitzia
 
 
 ##########################################################################
-#  CLIENT_Realname realname                                              #
-#                                                                        #
-#  The realname the bot should use on the IRC server                     #
-#                                                                        #
-##########################################################################
-
-CLIENT_Realname Blitzed IRC Trivia 0.8.01 (GPL)
-
-
-##########################################################################
 #  CLIENT_AdminPass                                                      #
 #                                                                        #
 #  Password used for certain admin commands                              #
@@ -83,16 +73,6 @@ CLIENT_Realname Blitzed IRC Trivia 0.8.01 (GPL)
 ##########################################################################
 
 CLIENT_AdminPass testpass
-
-
-##########################################################################
-#  CTCP_Version version                                                  #
-#                                                                        #
-#  The CTCP version reply of the bot, self explanatory.                  #
-#                                                                        #
-##########################################################################
-
-CTCP_Version Blitzed Trivia Version 0.8.01 (GPL)
 
 
 ##########################################################################
@@ -313,7 +293,7 @@ TEXT_GAME_Timeout Sorry no one got that one... next question coming up
 
 TEXT_GAME_Timeout_Show Sorry no one got that one, the answer was %s... next question coming up
 
-TEXT_GAME_Start Welcome to Blitzed-Trivia v0.8.01. A new game is starting (%d questions in database). The game will commence in %d seconds.
+TEXT_GAME_Start Welcome to Blitzed-Trivia. A new game is starting (%d questions in database). The game will commence in %d seconds.
 
 TEXT_GAME_Settings Hints Enabled (1 hint : %d letters in answer).
 

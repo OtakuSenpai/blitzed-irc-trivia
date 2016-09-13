@@ -6,7 +6,7 @@
  * This is a fork of the original project
  * (http://harlequin.sourceforge.net/)
  *
- * Copyright (C) 2016  Andy Alt (andyqwerty@users.sourceforge.net)
+ * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
  * This file is part of Blitzed IRC Trivia
  * (https://git.io/vicjS)
  *
@@ -49,10 +49,8 @@ public:
    char *IRC_Channel;
    char *CLIENT_Nick;
    char *CLIENT_Username;
-   char *CLIENT_Realname;
    int   CLIENT_TIME_Timeout;
    char *CLIENT_AdminPass;
-   char *CTCP_Version;
    char *GAME_DB;
    int   GAME_Points;
    int   GAME_BasePoints;
