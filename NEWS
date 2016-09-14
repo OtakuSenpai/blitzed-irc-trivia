@@ -1,5 +1,16 @@
 2016-09-13
 
+Although I intend to continue Windows support for Blitzed, I've removed
+the pre-built exe and related files from this release.
+
+I don't have easy access to Windows compilation software, so I
+was unable to build a new Windows exe.
+
+The ticket related to this is at
+https://github.com/andy5995/blitzed-irc-trivia/issues/12
+
+2016-09-13
+
 Version 0.8.11 released
 
 Blitzed IRC Trivia is now maintained by Andy Alt
