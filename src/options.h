@@ -16,4 +16,6 @@
 /* Max size of team name */
 #define TEAMMAX 32
 /* Define if compiling under win32 */
-/* #define WIN32 */
+// #ifndef
+// #define WIN32
+// #endif
