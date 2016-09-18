@@ -33,24 +33,33 @@
 
 using namespace std;
 
+#ifdef WIN32
 #include <sys/types.h>
+#include <winsock2.h>
+#include <wininet.h>
+#include <time.h>
+#endif
+
+#ifndef WIN32
+#include <netdb.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <netdb.h>
-#include <sys/time.h>
 #include <sys/stat.h>
-#include <time.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <sys/time.h>
 #include <errno.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <arpa/inet.h>
+#include <regex.h>
+#endif
+
 #include <signal.h>
 #include <stdarg.h>
-#include <regex.h>
+
+#include <unistd.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <fstream>
 #include <iostream>
