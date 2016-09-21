@@ -144,6 +144,9 @@ int main(int argv, char *args[])
    if(!config.load(args[1]))
       exit(1);
 
+/* Seed random number generator */
+srand ((unsigned) time (NULL));
+
 /* Prepare Alarm SIGNAL for timer */
 
    signal(SIGALRM,do_alarm);

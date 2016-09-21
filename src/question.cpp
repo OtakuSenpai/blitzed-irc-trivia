@@ -52,9 +52,6 @@ Question::~Question ()
 int
 Question::load_question ()
 {
-
-  srand ((unsigned) time (NULL));
-
   ifstream in;
 
   char out[1024];

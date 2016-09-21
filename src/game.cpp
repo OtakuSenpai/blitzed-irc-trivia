@@ -1075,8 +1075,6 @@ Game::showhint ()
   int random, num;
   char *hintanswer;
 
-  srand ((unsigned) time (NULL));
-
   // If there is an additional answer then use that one for the hint
   // otherwise use the main answer.
   // Rationale: main answers are often very long with irrelevant

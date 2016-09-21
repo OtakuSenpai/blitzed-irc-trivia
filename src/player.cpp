@@ -22,10 +22,10 @@ along with this program; if not, write to the Free Software
 
 #include "h.h"
 
-Player::Player() 
+Player::Player()
 {
-   head  = 0;   //Null point the linked lists 
-   tail  = 0; 
+   head  = 0;   //Null point the linked lists
+   tail  = 0;
    teams = 0;
 }
 
@@ -35,21 +35,18 @@ Player::~Player()
 
 void Player::add_player(char *nick)
 {
-
-   srand(( unsigned)time(NULL));
-
-   pi *newp = new pi; 
+   pi *newp = new pi;
    strncpy(newp->nick, nick, NICKMAX);
-   
+
    newp->points = 0;            //0 points
    newp->ghost = 0;             //Not a ghost (obviously)
    newp->team = select_team();  //Select a team for them (even if UseTeam = 0)
- 
+
    for(int i=0;i<PASSMAX;i++)    //Generate random password of PASSMAX size
-     newp->password[i] = 97 + (int) ((double)rand() * (26 - 1 + 1.0) / (RAND_MAX+1.0));   
+     newp->password[i] = 97 + (int) ((double)rand() * (26 - 1 + 1.0) / (RAND_MAX+1.0));
 
    newp->password[PASSMAX] = 0;  //Null terminate password
-   
+
    add_pi(newp);
 }
 
@@ -59,7 +56,7 @@ ti *Player::find_ti(int team)
    int i = 0;
 
    for(ti *t = teams;t;t = t->next)
-     { 
+     {
         i++;
 	if (team == i)
            return t;
@@ -76,7 +73,7 @@ int Player::team_points(int team)
    for(pi *p = head;p;p = p->next)
      if(p->team == team)
        retval += p->points;
-   return retval;    
+   return retval;
 
 
 }
@@ -84,10 +81,10 @@ int Player::team_points(int team)
 
 int Player::is_lead(char *nick)
 {
-  
+
   int max = 0;
   pi *p = find_pi(nick);
-  
+
   if(!p)
     return 0;
 
@@ -105,7 +102,7 @@ int Player::is_lead(char *nick)
 void Player::set_name(int team, char *name)
 {
    ti *t;
-   
+
    if(!(t = find_ti(team)))
      return;
 
@@ -120,7 +117,7 @@ void Player::set_name(int team, char *name)
 
 int Player::select_team()
 {
-  
+
   int i;
   int tcount = 0;
   int low[2];
@@ -133,19 +130,19 @@ int Player::select_team()
     {
        ti *newteam;
        newteam = new ti;
-    
+
        newteam->next = 0;
        snprintf(newteam->name, TEAMMAX,"Team %d",tcount+1); //Default team name
        newteam->members = 1;                        //Initialise to 1 member
        newteam->points  = 0;
-       newteam->lastname = 0;                       //Allow name change from the start   
+       newteam->lastname = 0;                       //Allow name change from the start
        if(!teams)                                   //Link to team list
          teams = newteam;
        else
         { for(ti *t = teams;t;t = t->next)           //Else add team to tail
 	   {
-	    if(!t->next)                          
-	     {                                      
+	    if(!t->next)
+	     {
 	       t->next = newteam;
 	       break;
 	     }
@@ -156,13 +153,13 @@ int Player::select_team()
     }
 
   //Else find team with lowest members and add to it
-  
-  low[0] = 1;  //Team that holds lowest so far 
+
+  low[0] = 1;  //Team that holds lowest so far
   low[1] = teams->members;  //Amount of members
   tcount = 0;
- 
+
   for(ti *t = teams; t; t = t->next) //Traverse keeping track of lowest count yet
-   { 
+   {
     tcount++;
     if(t->members <= low[1])
       {
@@ -170,11 +167,11 @@ int Player::select_team()
 	low[1] = t->members;
       }
    }
-  
+
    i = 0;
    for(ti *t = teams;t;t = t->next)
     {
-       i++;                   
+       i++;
        if(low[0] == i)         //Find lowest and increment members by 1
          t->members++;
     }
@@ -188,7 +185,7 @@ void Player::add_point(char *nick, int value)
 
     if(!is_player(nick))
       return;
-      
+
     p = find_pi(nick);
     p->points += value;
 
@@ -216,12 +213,12 @@ void Player::del_player(char *nick)
 
   pi *p = find_pi(nick);
   ti *t;
-  
+
   if(p)
    {
      t = find_ti(p->team);
      if(t)
-       t->members--;   
+       t->members--;
      remove_pi(p);
    }
 }
@@ -229,8 +226,8 @@ void Player::del_player(char *nick)
 int Player::is_player(char *nick)
 {
   pi *p = find_pi(nick);
-  
-  if(p)  
+
+  if(p)
     return 1;
   else
     return 0;
@@ -250,7 +247,7 @@ void Player::add_pi(pi *newp)
       newp->prev = tail;
       newp->next = NULL;
 
-      tail->next = newp; 
+      tail->next = newp;
       tail = newp;
     }
 
@@ -269,8 +266,8 @@ pi *Player::find_pi(char *nick)
 
        p = p->next;
 
-    } 
-   
+    }
+
    return NULL;
 }
 
@@ -280,16 +277,16 @@ void Player::remove_pi(pi *p)
      pi *next, *prev;
 
      if(!p)
-        return; 
+        return;
 
      if( (p->next != NULL) && (p->prev != NULL))
        {
            next = p->next;
            prev = p->prev;
-           
+
            prev->next = next;
            next->prev = prev;
- 
+
            delete p;
        }
 
@@ -312,7 +309,7 @@ void Player::remove_pi(pi *p)
       {
            head = p->next;
            next = p->next;
-           next->prev = NULL; 
+           next->prev = NULL;
            delete p;
       }
 
@@ -328,7 +325,7 @@ void Player::remove_all()
    {
      prev = p;
      p = p->next;
-     delete prev;     
+     delete prev;
    }
 
    head = NULL;
@@ -345,7 +342,7 @@ void Player::clear_teams()
         t->points  = 0;
     }
 }
- 
+
 
 int Player::num_players()
 {
@@ -369,7 +366,7 @@ int Player::num_teams()
    ti *t = teams;
    int counter = 0;
 
-   if(!t) 
+   if(!t)
      return 0;
 
    while(t)
@@ -400,7 +397,7 @@ void Player::savestate(ofstream &out)
          out.write((char *) &(p->ghost), sizeof(int));
          out.write((char *) &(p->points), sizeof(int));
          out.write((char *) &(p->team), sizeof(int));
-     } 
+     }
 
 
     //Write team structs out to file
@@ -420,7 +417,7 @@ void Player::loadstate(ifstream &in)
 {
 
     int players; // How many players we're loading
-    int numteams; // How many teams we're loading 
+    int numteams; // How many teams we're loading
     pi *p;
 
     //Clear what we have for new data
@@ -431,7 +428,7 @@ void Player::loadstate(ifstream &in)
     //Read players
     //First sizeof(int) is the numbers of following players stored
     in.read((char *) &players, sizeof(int));
-    
+
     for(int i = 0; i < players; i++)
      {
         p = new pi;
@@ -442,11 +439,11 @@ void Player::loadstate(ifstream &in)
 
         in.read((char *) &(p->ghost), sizeof(int));
         in.read((char *) &(p->points), sizeof(int));
-        in.read((char *) &(p->team), sizeof(int));         
+        in.read((char *) &(p->team), sizeof(int));
 
         //Add p to list
 
-        p->next = 0;     
+        p->next = 0;
         p->prev = 0;
 
         if(!head)
@@ -469,7 +466,7 @@ void Player::loadstate(ifstream &in)
 
          }
 
-     }  
+     }
 
 
 
@@ -479,7 +476,7 @@ void Player::loadstate(ifstream &in)
      for(int i = 0; i < numteams; i++)
       {
          ti *t = new ti;
-           
+
          in.read((char *) t->name, TEAMMAX);
          in.read((char *) &(t->members), sizeof(int));
          in.read((char *) &(t->points) , sizeof(int));
@@ -497,7 +494,7 @@ void Player::loadstate(ifstream &in)
                      if(!tt->next)
                        {
                           tt->next = t;
-                          break;        
+                          break;
                        }
                 }
           }
@@ -531,22 +528,22 @@ void Player::sort()
                            //And its greater alphabetically
                      if(strcmp(pp->nick, ptarget->nick) < 0)
                       {    //Change target
-                           ptarget = pp;                          
+                           ptarget = pp;
                            continue;
                       }
 
                  }
 
                if((pp->points > ntarget))
-                 {                     
+                 {
                     ptarget = pp;
                     ntarget = pp->points;
                  }
-         }         
+         }
 
         //No suitable selection found
         //meaning current element is in
-        //proper place. Go on to next 
+        //proper place. Go on to next
         //element
 
         if(ntarget == p->points)
@@ -560,13 +557,13 @@ void Player::sort()
                       tail = ptarget->prev;
                       ptarget->prev->next = 0;
                   }
-               else 
+               else
                  {         //Link around target
                     ptarget->next->prev = ptarget->prev;
                     ptarget->prev->next = ptarget->next;
                   } //Target is now free
 
-                 
+
                 //Now lets link it before the current element
                 if(!p->prev) //Current element IS the head
                   {
@@ -581,9 +578,9 @@ void Player::sort()
                       ptarget->prev = p->prev;
                       ptarget->next = p;
                       p->prev = ptarget;
-                    }  
+                    }
 
-                p = p->prev;   //Set us back one so we can check again  
+                p = p->prev;   //Set us back one so we can check again
 
                 continue;
            }
