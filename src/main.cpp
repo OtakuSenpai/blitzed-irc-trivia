@@ -128,7 +128,7 @@ int main(int argv, char *args[])
 
 /* Background */
 #ifndef WIN32
-   if(pid = fork())
+   if ((pid = fork()))
     {
        pidout.open("trivia.pid", ios::out);
        if(!pidout.fail())
