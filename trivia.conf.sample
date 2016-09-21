@@ -271,7 +271,7 @@ LOG_FromServer 1
 ###########################################################################
 
 
-TEXT_GAME_Newplayer You have been added to the game, use the rem command (in channel) at any time to leave the game.
+TEXT_GAME_Newplayer You have been added to the game
 
 TEXT_GAME_Notplayer You are not a player.
 
@@ -300,7 +300,5 @@ TEXT_GAME_Settings Hints Enabled (1 hint : %d letters in answer).
 TEXT_GAME_Toosmall Aye, the answers too small for a hint
 
 TEXT_GAME_Hint Hint: %s
-
-TEXT_GAME_Password Your ghost password is %s. Please write it down. You will need it to continue the game if you leave the channel.
 
 ########################### END CONFIG ###################################

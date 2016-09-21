@@ -130,7 +130,7 @@ enum {
   CMD_HELP
 };
 
-#define CMD_ITEMS 7
+#define CMD_ITEMS 6
 
 struct cmd
 {

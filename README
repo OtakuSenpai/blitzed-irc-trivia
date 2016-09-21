@@ -44,32 +44,25 @@ COMMANDS
               .uptime     - give uptime
               .status     - give status (display how the game is configured)
               .list       - list players
-              .rem        - leave game
               .help       - display help
 
 
          privmsg:
 
               stop  <admin password>
-	          Stop the game
+                  Stop the game
 
               set   <admin password> <nick> <points>
-	          Manually set someone's points (0 for remove)
+                  Manually set someone's points (0 for remove)
 
-	      force <admin password>
-	          Force a question to be asked immediately.
-
-	      identify <ghost password>
-	          Identify to unlock nick (GAME_AutoRem 0 only)
-
-	      regain <ghost password> <nick>
-	          Regain points from ghost to current nick (GAME_AutoRem 0 only)
+              force <admin password>
+                  Force a question to be asked immediately.
 
               list <admin password>
-                  List nicknames structures and information (password/team/score)
+                  List nicknames structures and information (team/score)
 
               load <admin password> <file>
-	          Load config file
+                  Load config file
 
               config <admin password> <parameter> <new value>
                   Alter config parameters in real time
@@ -148,4 +141,4 @@ HOW ANSWER MATCHING WORKS
     vowels.
 
 
-    This file last updated 2016-09-10
+    This file last updated 2016-09-21

@@ -412,14 +412,10 @@ Client::parse_line (char *line)
     {
       if (!strcmp (second, "PRIVMSG"))
         parse_privmsg (source, line);
-      if (!strcmp (second, "PART"))
-        parse_part (source, line);
       if (!strcmp (second, "QUIT"))
         parse_part (source, line);
       if (!strcmp (second, "NICK"))
         parse_newnick (source, line);
-      if (!strcmp (second, "JOIN"))
-        parse_join (source, line);
       if (!strcmp (second, "KICK"))
         parse_kick (source, line);
     }
@@ -436,19 +432,6 @@ Client::parse_line (char *line)
   if (strcmp (second, "001") == 0)
     m_status.registered = 1;
 }
-
-void
-Client::parse_join (source_struct * source, char *line)
-{
-  if (!strcmp (source->nick, config->CLIENT_Nick))
-  {
-    m_status.joined = 1;
-    m_time.last_checked_join.tv_sec;
-  }
-  game->do_join (source, line);
-
-}
-
 
 void
 Client::parse_kick (source_struct * source, char *line)
@@ -475,10 +458,6 @@ Client::parse_part (source_struct * source, char *line)
 
   if (!target)
     return;
-
-  game->do_part (source, target);
-
-
 }
 
 void

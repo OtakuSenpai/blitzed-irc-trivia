@@ -61,7 +61,6 @@ config_hash table[] = {
       { "GAME_HintRatio"          ,  TYPE_INT     ,0,   &(config.GAME_HintRatio)           },
       { "GAME_UseHint"            ,  TYPE_BOOL    ,0,   &(config.GAME_UseHint)             },
       { "GAME_MinHint"            ,  TYPE_INT     ,0,   &(config.GAME_MinHint)             },
-      { "GAME_AutoRem"            ,  TYPE_BOOL    ,0,   &(config.GAME_AutoRem)             },
       { "GAME_ShowAnswer"         ,  TYPE_BOOL    ,0,   &(config.GAME_ShowAnswer)          },
       { "GAME_TIME_Timeout"       ,  TYPE_INT     ,0,   &(config.GAME_TIME_Timeout)        },
       { "GAME_TIME_StartDelay"    ,  TYPE_INT     ,0,   &(config.GAME_TIME_StartDelay)     },
@@ -71,8 +70,6 @@ config_hash table[] = {
       { "LOG_FromServer"          ,  TYPE_BOOL    ,0,   &(config.LOG_FromServer)           },
       { "TEXT_GAME_Newplayer"     ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Newplayer)      },
       { "TEXT_GAME_Notplayer"     ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Notplayer)      },
-      { "TEXT_GAME_Removed"       ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Removed)        },
-      { "TEXT_GAME_HasLeft"       ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_HasLeft)        },
       { "TEXT_GAME_Listhead"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Listhead)       },
       { "TEXT_GAME_Listtail"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Listtail)       },
       { "TEXT_GAME_Correct_Answer",  TYPE_STRING  ,0,   &(config.TEXT_GAME_Correct_Answer) },
@@ -83,7 +80,6 @@ config_hash table[] = {
       { "TEXT_GAME_Settings"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Settings)       },
       { "TEXT_GAME_Toosmall"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Toosmall)       },
       { "TEXT_GAME_Hint"          ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Hint)           },
-      { "TEXT_GAME_Password"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Password)       },
       { "TEXT_GAME_Timeout_Show"  ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Timeout_Show)   },
 };
 

@@ -14,6 +14,5 @@ TODO:
     Category Selection? (strtok)
     Regex matching for question files? (strtok)
     Line break character for DB (IZS)
-    Bot starts new game after N seconds (IZS)
     Soundex Force ON/OFF in Config (grifferz)
     Repeat Question Command (IZS)

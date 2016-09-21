@@ -65,7 +65,6 @@ struct cmd channel_commands[CMD_ITEMS] = {
   {".start", CMD_START,
    "start a game round if there isn't one already running"},
   {".list", CMD_LIST, "list players"},
-  {".rem", CMD_REM, "leave game (remove self)"},
   {".status", CMD_STATUS, "display the game configuration"},
   {".uptime", CMD_UPTIME, "show uptime"},
   {".version", CMD_VERSION, "list players"},
@@ -147,9 +146,6 @@ Game::do_newplayer (source_struct * source)
 
   client->notice (source->nick, config->TEXT_GAME_Newplayer);
 
-  if (!config->GAME_AutoRem)
-    client->notice (source->nick, config->TEXT_GAME_Password, p->password);
-
   if (config->GAME_UseTeams)
   {
     t = player->find_ti (p->team);
@@ -177,25 +173,6 @@ Game::reset_scores ()
   for (ti * t = player->teams; t; t = t->next)
   {
     t->points = 0;
-  }
-
-}
-
-void
-Game::do_rem (source_struct * source, char *args)
-{
-
-  if (!player->is_player (source->nick))
-    client->notice (source->nick, config->TEXT_GAME_Notplayer);
-  else
-  {
-    pi *p = player->find_pi (source->nick);
-    if (p->ghost)
-      return;
-    player->del_player (source->nick);
-    client->notice (source->nick, config->TEXT_GAME_Removed);
-    client->privmsg (config->IRC_Channel, config->TEXT_GAME_HasLeft,
-                     source->nick);
   }
 
 }
@@ -243,10 +220,6 @@ Game::do_channel (source_struct * source, char *target, char *msg)
             list_teams (config->IRC_Channel);
           time (&(m_status.lastlist));
         }
-        break;
-
-      case CMD_REM:
-        do_rem (source, NULL);
         break;
 
       case CMD_STATUS:
@@ -307,14 +280,6 @@ Game::do_msg (source_struct * source, char *target, char *cmd, char *rest)
     if (!strcasecmp (cmd, "name") && !strcasecmp (passwd, "team"))
       do_nameteam (source, passwd, args);
 
-  if (!config->GAME_AutoRem)
-  {
-    if (!strcasecmp (cmd, "identify"))
-      do_identify (source, passwd, args);
-    if (!strcasecmp (cmd, "regain"))
-      do_regain (source, passwd, args);
-  }
-
   if (strcmp (passwd, config->CLIENT_AdminPass))        //Incorrect admin password
     return;
 
@@ -337,87 +302,6 @@ Game::do_msg (source_struct * source, char *target, char *cmd, char *rest)
     do_rehash (source, args);
 }
 
-void
-Game::do_identify (source_struct * source, char *passwd, char *args)
-{
-  pi *p;
-
-  if (!passwd)
-    return;
-
-  p = player->find_pi (source->nick);
-
-  if (!p)
-    return;
-
-  if (!strcasecmp (p->password, passwd))
-  {
-    p->ghost = 0;
-    client->notice (source->nick,
-                    "Identified. You have %d points in the game.", p->points);
-  }
-  else
-    client->notice (source->nick, "Incorrect Password.");
-
-}
-
-
-
-
-void
-Game::do_regain (source_struct * source, char *passwd, char *args)
-{
-  pi *target;
-  pi *p;
-
-  if (!passwd)
-    return;
-
-  target = player->find_pi (args);
-
-  if (config->GAME_UseTeams)
-  {
-    client->notice (source->nick, "Regain is disabled during team games");
-    return;
-  }
-
-  if (!target)
-  {
-    client->notice (source->nick, "No player exists under that nick.");
-    return;
-  }
-
-  if (!target->ghost)
-  {
-    client->notice (source->nick, "No ghost exists under that nick.");
-    return;
-  }
-
-  if (!strcasecmp (target->password, passwd))
-  {
-    if (!player->is_player (source->nick))
-    {
-      player->add_player (source->nick);
-
-      p = player->find_pi (source->nick);       //Let them have their old password
-      strcpy (p->password, target->password);
-
-      client->notice (source->nick, config->TEXT_GAME_Newplayer);
-      client->notice (source->nick, config->TEXT_GAME_Password, p->password);
-
-    }
-    p = player->find_pi (source->nick);
-
-    if (!p)
-      return;
-
-    p->points += target->points;
-    player->del_player (args);
-    check_winner ();
-  }
-
-
-}
 
 void
 Game::do_nameteam (source_struct * source, char *passwd, char *args)
@@ -463,10 +347,8 @@ Game::do_admin_list (source_struct * source, char *args)
 
   //Can be flooding! Needs rewritten with queue or something
   for (pi * p = player->head; p; p = p->next)
-    client->notice (source->nick,
-                    "NICK: %s GHOSTPASS: %s GHOSTED: %s POINTS: %d TEAM: %d",
-                    p->nick, p->password, (p->ghost) ? "yes" : "no",
-                    p->points, p->team);
+    client->notice (source->nick, "NICK: %s POINTS: %d TEAM: %d",
+                    p->nick, p->points, p->team);
 
 
 
@@ -551,7 +433,6 @@ Game::do_set (source_struct * source, char *args)
     p = player->find_pi (nick);
   else
   {
-    player->add_player (nick);
     p = player->find_pi (nick);
   }
 
@@ -560,54 +441,6 @@ Game::do_set (source_struct * source, char *args)
   client->privmsg (config->IRC_Channel,
                    "\002%s\002 has set \002%s\002 to \002%d\002 points",
                    source->nick, nick, nvalue);
-
-}
-
-
-void
-Game::do_join (source_struct * source, char *target)
-{
-
-  pi *p;
-
-  if (!strcmp (source->nick, config->CLIENT_Nick))
-  {
-    if (config->GAME_SaveState)
-      loadstate ();             //Load game status
-
-    return;
-  }
-
-  if (m_status.question_active)
-    client->notice (source->nick, "Current Question: %s",
-                    question->m_question.question);
-
-
-  p = player->find_pi (source->nick);
-
-  if (p && p->ghost)
-    client->notice (source->nick,
-                    "This nick '%s' is ghosted. You must identify to it to regain access to trivia.",
-                    source->nick);
-}
-
-void
-Game::do_part (source_struct * source, char *target)
-{
-
-  pi *p;
-
-  if (player->is_player (source->nick) && config->GAME_AutoRem)
-  {
-    player->del_player (source->nick);
-    client->privmsg (config->IRC_Channel, config->TEXT_GAME_HasLeft,
-                     source->nick);
-  }
-  else if (player->is_player (source->nick))
-  {
-    p = player->find_pi (source->nick);
-    p->ghost = 1;
-  }
 
 }
 
@@ -634,36 +467,14 @@ Game::do_newnick (source_struct * source, char *target)
 
 
   if (p)
-    if (p->ghost && !newp)
+    if (!newp)
       return;
 
-  if (p && !newp && !p->ghost)
+  if (p && !newp)
   {
     strcpy (p->nick, newnick);
     return;
   }
-
-  if (p && newp)
-  {
-    client->notice (source->nick,
-                    "I am unable to merge your old nick, '%s', with your new nick, '%s', because '%s' is a ghosted nick. Because of this I have ghosted '%s'.",
-                    p->nick, newp->nick, newp->nick, p->nick);
-    p->ghost = 1;               //Ghost their old nick
-    return;                     //Return without doing anything
-  }
-  else if (newp)
-  {
-    client->notice (source->nick,
-                    "This nick '%s' is ghosted. You must identify to it to regain access to trivia.",
-                    newp->nick);
-    client->notice (source->nick,
-                    "Issue the command /msg %s identify <ghost password>",
-                    config->CLIENT_Nick);
-    return;
-
-  }
-
-
 }
 
 

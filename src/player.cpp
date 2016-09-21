@@ -39,13 +39,7 @@ void Player::add_player(char *nick)
    strncpy(newp->nick, nick, NICKMAX);
 
    newp->points = 0;            //0 points
-   newp->ghost = 0;             //Not a ghost (obviously)
    newp->team = select_team();  //Select a team for them (even if UseTeam = 0)
-
-   for(int i=0;i<PASSMAX;i++)    //Generate random password of PASSMAX size
-     newp->password[i] = 97 + (int) ((double)rand() * (26 - 1 + 1.0) / (RAND_MAX+1.0));
-
-   newp->password[PASSMAX] = 0;  //Null terminate password
 
    add_pi(newp);
 }
@@ -392,9 +386,6 @@ void Player::savestate(ofstream &out)
     for(pi *p = head;p;p = p->next)
      {
          out.write((char *) p->nick, (NICKMAX + 1));
-         out.write((char *) p->password, (PASSMAX + 1));
-
-         out.write((char *) &(p->ghost), sizeof(int));
          out.write((char *) &(p->points), sizeof(int));
          out.write((char *) &(p->team), sizeof(int));
      }
@@ -434,10 +425,8 @@ void Player::loadstate(ifstream &in)
         p = new pi;
 
         in.read((char *) &(p->nick), (NICKMAX + 1));
-        in.read((char *) &(p->password), (PASSMAX + 1));
 
 
-        in.read((char *) &(p->ghost), sizeof(int));
         in.read((char *) &(p->points), sizeof(int));
         in.read((char *) &(p->team), sizeof(int));
 
