@@ -123,7 +123,6 @@ public:
 enum {
   CMD_START,
   CMD_LIST,
-  CMD_REM,
   CMD_STATUS,
   CMD_UPTIME,
   CMD_VERSION,
