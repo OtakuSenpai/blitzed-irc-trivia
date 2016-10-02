@@ -31,10 +31,11 @@
 #ifndef LOG_H
 #define LOG_H
 
-class Log {
+class Log
+{
 
-   public:
-      void logtofile(const char *data,...);
+public:
+  void logtofile (const char *data, ...);
 
 };
 

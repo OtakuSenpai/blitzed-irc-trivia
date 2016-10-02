@@ -30,17 +30,28 @@
 
 #include "h.h"
 
-void Log::logtofile(const char *data,...)
+void
+Log::logtofile (const char *data, ...)
 {
-        va_list         arglist;
-        FILE           *fp;
+  va_list arglist;
+  FILE *fp;
 
-        if ((fp = fopen(LOGFILE, "a")) == NULL)
-                return;
+  if ((fp = fopen (LOGFILE, "a")) == NULL)
+    return;
 
-        va_start(arglist, data);
-        vfprintf(fp, data, arglist);
-        va_end(arglist);
+  time_t timer;
+  char buffer[26];
+  struct tm* tm_info;
 
-        fclose(fp);
+  time(&timer);
+  tm_info = localtime(&timer);
+
+  strftime(buffer, 26, "%Y:%m:%d %H:%M:%S", tm_info);
+
+  va_start (arglist, data);
+  fprintf (fp, "[%s] ", buffer);
+  vfprintf (fp, data, arglist);
+  va_end (arglist);
+
+  fclose (fp);
 }
