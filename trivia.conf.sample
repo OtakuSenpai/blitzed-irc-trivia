@@ -275,10 +275,6 @@ TEXT_GAME_Newplayer You have been added to the game
 
 TEXT_GAME_Notplayer You are not a player.
 
-TEXT_GAME_Removed You have been removed from the game.
-
-TEXT_GAME_HasLeft %s has left the game.
-
 TEXT_GAME_Listhead - Player List -
 
 TEXT_Game_Listtail - End List, %d Players -

@@ -1,14 +1,12 @@
 /*
- * blitzed_config.cpp
+ * blitzed_config.h
  *
  * Copyright (C) 2001  Erik Fears
  *
- * This is a fork of the original project
- * (http://harlequin.sourceforge.net/)
- *
  * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
- * This file is part of Blitzed IRC Trivia
- * (https://git.io/vicjS)
+ *
+ *  This file is part of Blitzed IRC Trivia
+ * (https://github.com/andy5995/blitzed-irc-trivia/wiki)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +22,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  *
  */
 
