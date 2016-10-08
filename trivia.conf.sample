@@ -11,7 +11,12 @@
 #   a hostname or IP address - make sure it allows bots!                   #
 ############################################################################
 
-IRC_Server irc.quakenet.org
+# uncomment only 1 server
+#IRC_Server irc.dal.net
+#IRC_Server irc.quakenet.org
+#IRC_Server irc.freenode.net
+#IRC_Server irc.quakenet.org
+#IRC_Server irc.blitzed.org
 
 
 ############################################################################
@@ -31,7 +36,7 @@ IRC_Port 6667
 #  and uses for all game purposes.                                         #
 ############################################################################
 
-IRC_Channel #blitzed-trivia
+#IRC_Channel #trivia-blitz
 
 
 ############################################################################
