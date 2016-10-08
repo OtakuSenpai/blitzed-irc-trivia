@@ -3,12 +3,10 @@
  *
  * Copyright (C) 2001  Erik Fears
  *
- * This is a fork of the original project
- * (http://harlequin.sourceforge.net/)
- *
  * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
+ *
  * This file is part of Blitzed IRC Trivia
- * (https://git.io/vicjS)
+ * (https://github.com/andy5995/blitzed-irc-trivia/wiki)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +22,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  *
  */
 
@@ -44,7 +41,6 @@ Game::Game ()
 Game::~Game ()
 {
 }
-
 
 void
 Game::do_status (source_struct * source, const char *args)
@@ -82,8 +78,6 @@ Game::do_uptime (source_struct * source, const char *args)
   time_t present;
   time_t diff;
   timestruct uptime;
-
-
 
   *out = 0;                     // NULL Term
 
@@ -158,7 +152,6 @@ Game::do_newplayer (source_struct * source)
   }
 }
 
-
 void
 Game::reset_scores ()
 {
@@ -231,10 +224,10 @@ Game::do_channel (source_struct * source, char *target, char *msg)
         break;
 
       case CMD_VERSION:
-        client->privmsg (config->IRC_Channel, "%s", VERSION);
-        client->privmsg (config->IRC_Channel, "Author: Andy Alt ");
-        client->privmsg (config->IRC_Channel,
-                         "/ Blitzed IRC Trivia home page: https://git.io/vi04F");
+        client->privmsg (config->IRC_Channel, "\n\
+%s\n\
+home page: https://github.com/andy5995/blitzed-irc-trivia/wiki"
+, PACKAGE_STRING);
         break;
 
       case CMD_HELP:
@@ -302,7 +295,6 @@ Game::do_msg (source_struct * source, char *target, char *cmd, char *rest)
     do_rehash (source, args);
 }
 
-
 void
 Game::do_nameteam (source_struct * source, char *passwd, char *args)
 {
@@ -340,7 +332,6 @@ Game::do_nameteam (source_struct * source, char *passwd, char *args)
 
 }
 
-
 void
 Game::do_admin_list (source_struct * source, char *args)
 {
@@ -364,7 +355,6 @@ Game::do_force (source_struct * source, char *args)
   m_status.timer = 0;           //Set timer to 0, forcing question on next update
 
 }
-
 
 void
 Game::do_die (source_struct * source, char *args)
@@ -441,13 +431,11 @@ Game::do_set (source_struct * source, char *args)
   client->privmsg (config->IRC_Channel,
                    "\002%s\002 has set \002%s\002 to \002%d\002 points",
                    source->nick, nick, nvalue);
-
 }
 
 void
 Game::do_newnick (source_struct * source, char *target)
 {
-
   char *newnick = parse->strip_leading (target);
   pi *p;
   pi *newp;
@@ -458,13 +446,11 @@ Game::do_newnick (source_struct * source, char *target)
   p = player->find_pi (source->nick);
   newp = player->find_pi (newnick);
 
-
   if (config->GAME_ACTIVITY_Enabled)    //Change activity key of nick
     activity.keychange (source->nick, newnick);
 
   if (!p && !newp)
     return;
-
 
   if (p)
     if (!newp)
@@ -477,11 +463,9 @@ Game::do_newnick (source_struct * source, char *target)
   }
 }
 
-
 void
 Game::list_teams (char *target)
 {
-
   player->sort ();
 
   if (!player->teams)
@@ -514,17 +498,12 @@ Game::list_teams (char *target)
 
       client->privmsg (target, out);
     }
-
-
   }
-
 }
 
 void
 Game::list_players (char *target)
 {
-
-
   //Sort player list
   player->sort ();
 
@@ -539,7 +518,6 @@ Game::list_players (char *target)
   char tmp[512];
 
   out[0] = 0;
-
 
   client->privmsg (target, config->TEXT_GAME_Listhead);
 
@@ -585,11 +563,7 @@ Game::check_winner ()
         stop ();
         return;
       }
-
     }
-
-
-
 
   else
     for (pi * p = player->head; p; p = p->next)
@@ -604,11 +578,9 @@ Game::check_winner ()
     }
 }
 
-
 void
 Game::check_answer (source_struct * source, char *msg)
 {
-
   int value;
 
   pi *p;
@@ -677,11 +649,9 @@ Game::check_answer (source_struct * source, char *msg)
   }
 }
 
-
 int
 Game::string_match (int type, char *str1, char *str2)
 {
-
   char strex1[512];             //512 will cover max irc string length, should be safe
   char strex2[512];
 
@@ -695,7 +665,6 @@ Game::string_match (int type, char *str1, char *str2)
   log->logtofile ("Got back: %s %s\nGot back: %s %s\n", str1, strex1, str2,
                   strex2);
 #endif
-
 
   if ((strlen (strex1) < 2) || (strlen (strex2) < 2))
     type = 0;                   //If strex is only 1 char, use literal matching
@@ -715,7 +684,6 @@ Game::string_match (int type, char *str1, char *str2)
       return rval;
     }
   }
-
   else if (type == 1)
   {
 
@@ -734,16 +702,13 @@ Game::string_match (int type, char *str1, char *str2)
   return 0;
 }
 
-
 void
 Game::alarm ()
 {
-
   char out[QUESTIONMAX + 1];
 
   if (!m_status.active)
     return;
-
 
   if (m_status.timer < 0)       /* In between questions */
   {
@@ -780,7 +745,6 @@ Game::alarm ()
         ok = 1;
         ctr = 0;
       }
-
       else if (good == 0)
       {
         ctr++;
@@ -799,7 +763,6 @@ Game::alarm ()
           return;
         }
       }
-
       else if (good == -1)
       {
         stop();
@@ -831,18 +794,14 @@ Game::alarm ()
       client->privmsg (config->IRC_Channel, config->TEXT_GAME_Timeout);
   }
 
-
   if (config->GAME_UseHint)
     if ((m_status.timer > config->GAME_TIME_GiveHint) && !m_status.hinted)
       showhint ();
-
-
 }
 
 void
 Game::start ()
 {
-
   if (!m_status.active)
   {
     m_status.active = 1;
@@ -927,7 +886,6 @@ Game::showhint ()
     out[random] = hintanswer[random];
   }
 
-
   client->privmsg (config->IRC_Channel, config->TEXT_GAME_Hint, out);
 
   delete[]out;
@@ -936,21 +894,18 @@ Game::showhint ()
 int
 Game::check_adminpass (char *password)
 {
-
   if (!strcmp (password, config->CLIENT_AdminPass))
     return 1;
   else
     return 0;
 }
 
-
-
 void
 Game::savestate ()
 {
-
   ofstream out;
   out.open ("game.state", ios::out);
+
   if (out.fail ())
   {
     stop ();
@@ -964,14 +919,11 @@ Game::savestate ()
   question->savestate (out);
 
   out.close ();
-
 }
-
 
 void
 Game::loadstate ()
 {
-
   ifstream in;
   in.open ("game.state", ios::in);
 
@@ -993,5 +945,4 @@ Game::loadstate ()
   question->loadstate (in);     //Load question/history status
 
   in.close ();
-
 }
