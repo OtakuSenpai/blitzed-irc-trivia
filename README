@@ -8,17 +8,14 @@ features are used. The only usage of new C++ features in this code is
 simple class structure, the new operator and C++'s iostream library for
 file io.
 
-Blitzed IRC Trivia web page: https://git.io/vi04F
+Blitzed IRC Trivia web page
+https://github.com/andy5995/blitzed-irc-trivia/wiki
 
 Any questions about installation and configuring can be sent to
 andy400-dev@yahoo.com or using the contact methods listed on the home page.
 
 Please see the NEWS file for notes about required changes that need to
 be made to your existing installation of Blitzed, if any.
-
-This README is based from current development. To view the README from the
-last release, use the link below.
-https://github.com/andy5995/blitzed-irc-trivia/blob/v0.8.11/README
 
 INSTALLATION
 ------------

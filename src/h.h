@@ -70,7 +70,11 @@ using namespace std;
 #include "config.h"
 
 #ifndef VERSION
-#define VERSION "0.8.12"
+#define VERSION "0.8.21"
+#endif
+
+#ifndef PACKAGE_STRING
+#define PACKAGE_STRING "Blitzed IRC Trivia "VERSION
 #endif
 
 #endif /* #ifndef H_H */

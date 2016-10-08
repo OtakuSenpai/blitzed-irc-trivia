@@ -1,3 +1,10 @@
+2016-10-08
+
+    trivia.conf.sample: commented out IRC_Server and channel. User
+    must edit these before running 'trivia'
+
+    Version 0.8.21 released
+
 2016-10-02
 
     Timestamps added to logfile - closes #7

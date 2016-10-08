@@ -1,3 +1,11 @@
+2016-09-08
+
+Version 0.8.21 released
+
+Ghosting password feature removed
+
+Log entries are now preceded by a time/date stamp
+
 2016-09-13
 
 Although I intend to continue Windows support for Blitzed, I've removed
