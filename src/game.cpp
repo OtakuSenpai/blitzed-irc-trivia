@@ -224,10 +224,9 @@ Game::do_channel (source_struct * source, char *target, char *msg)
         break;
 
       case CMD_VERSION:
-        client->privmsg (config->IRC_Channel, "\n\
-%s\n\
-home page: https://github.com/andy5995/blitzed-irc-trivia/wiki"
-, PACKAGE_STRING);
+        client->privmsg (config->IRC_Channel, "%s", PACKAGE_STRING);
+        client->privmsg (config->IRC_Channel,
+"home page: https://github.com/andy5995/blitzed-irc-trivia/wiki");
         break;
 
       case CMD_HELP:
