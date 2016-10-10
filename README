@@ -1,9 +1,17 @@
 INTRODUCTION
 ------------
-     In September of 2016, I forked this project, which hadn't been
+In September of 2016, I forked this project, which hadn't been
 developed in about 16 years.
 
-     While this project is labeled as C++, very little of C++'s advanced
+Blitzed IRC Trivia is an IRC bot that will connect to a server, join a
+channel, and ask trivia questions. Allows team or single-play, can use a
+phonetic pattern-matching algorithm (answers don't need to be exact),
+and has many other options. The latest version builds only on Linux, but
+a Windows port is planned. Originally developed by Eric Fears, this
+project is now maintained by Andy Alt (not affiliated with the Blitzed
+IRC Network)
+
+While this project is labeled as C++, very little of C++'s advanced
 features are used. The only usage of new C++ features in this code is
 simple class structure, the new operator and C++'s iostream library for
 file io.
@@ -13,6 +21,10 @@ https://github.com/andy5995/blitzed-irc-trivia/wiki
 
 Any questions about installation and configuring can be sent to
 andy400-dev@yahoo.com or using the contact methods listed on the home page.
+
+This README is based from current development. To view the README from the
+last release, use the link below.
+https://github.com/andy5995/blitzed-irc-trivia/blob/v0.8.21/README
 
 Please see the NEWS file for notes about required changes that need to
 be made to your existing installation of Blitzed, if any.
@@ -138,4 +150,4 @@ HOW ANSWER MATCHING WORKS
     vowels.
 
 
-    This file last updated 2016-09-21
+    This file last updated 2016-10-08
