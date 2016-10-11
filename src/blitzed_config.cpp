@@ -27,122 +27,125 @@
 
 #include "h.h"
 
-Config::Config()
+Config::Config ()
 {
 }
 
-Config::~Config()
+Config::~Config ()
 {
 }
 
-int Config::load(char *file)
+int
+Config::load (char *file)
 {
+  ifstream in;
+  char line[4096];
+  int error = 0;
 
+  in.open (file, ios::in);
 
-   ifstream in;
-   char line[4096];
-   int error = 0;
+  if (in.fail ())
+  {
+    log->logtofile ("Error opening %s\n", file);
+    in.close ();
+    return 0;
+  }
 
-   in.open(file, ios::in);
+  //Parse config file
+  do
+  {
+    in.getline (line, 4096, '\n');
 
-   if(in.fail())
+    if (line[0] == '#')
+      continue;
+
+    parse_entry (line);
+  }
+  while (!in.eof ());
+
+  for (int i = 0; i < m_size; i++)
+  {
+    if (!(m_table[i].flag))
     {
-       log->logtofile("Error opening %s\n",file);
-       in.close();
-       return 0;
+      error = 1;
+      log->logtofile ("Error reading '%s' in config file.\n",
+                      m_table[i].name);
     }
+  }
 
-   //Parse log file
-   do
-   {
-      in.getline(line,4096,'\n');
-      if(line[0] == '#')
-        continue;
-      parse_entry(line);
-   } while(!in.eof());
+  if (error)
+  {
+    log->
+      logtofile ("Terminating due to unrecoverable errors in config file\n");
+    exit (1);
+  }
 
-
-   for(int i=0;i<m_size;i++)
-    {
-       if(!(m_table[i].flag))
-        {
-            error = 1;
-            log->logtofile("Error reading '%s' in config file.\n",m_table[i].name);
-        }
-    }
-
-   if(error)
-    {
-       log->logtofile("Terminating due to unrecoverable errors in config file\n");
-       exit(1);
-    }
-
-   in.close();
-   return 1;
+  in.close ();
+  return 1;
 }
 
-int Config::parse_entry(char *entry)
+int
+Config::parse_entry (char *entry)
 {
+  int num;
+  char *variable, *value, *s = NULL;
+  int i;
+  i = 0;
 
-   int num;
-   char *variable, *value, *s = NULL;
-   int i;
-   i = 0;
+  if (!entry)
+    return 0;
 
-   if(!entry)
-     return 0;
+  variable = strtok (entry, " ");
 
-   variable = strtok(entry, " ");
+  if (!entry || !variable)
+    return 0;
 
-   if(!entry || !variable)
-     return 0;
+  value = strtok (NULL, "");
 
-   value = strtok(NULL, "");
+  if (!value)
+    return 0;
 
-   if(!value)
-      return 0;
-
-
-   for(int i=0;i < m_size;i++)
-   {
-      if(!strcasecmp(m_table[i].name, variable))
-      {
+  for (int i = 0; i < m_size; i++)
+  {
+    if (!strcasecmp (m_table[i].name, variable))
+    {
 #ifdef DEBUG
-    log->logtofile("Loading... %s=%s\n",m_table[i].name,value);
+      log->logtofile ("Loading... %s=%s\n", m_table[i].name, value);
 #endif
-        switch(m_table[i].type)
-         {
-            case TYPE_INT:
-                  *(int *)m_table[i].value = strtol(value, &s, 0);
-                  if(m_table[i].value)
-                     m_table[i].flag = 1;
-                  return 1;
-            case TYPE_STRING:
-                  if(m_table[i].flag)
-                      delete [] *(char **) m_table[i].value;
+      switch (m_table[i].type)
+      {
+      case TYPE_INT:
+        *(int *) m_table[i].value = strtol (value, &s, 0);
+        if (m_table[i].value)
+          m_table[i].flag = 1;
+        return 1;
 
-                  *(char**)m_table[i].value = strdup(value);
-                  if(!m_table[i].value)
-                    {
-                        log->logtofile("Error: Out of memory!\n");
-                        exit(1);
-                    }
-                  m_table[i].flag = 1;
-                  return 1;
+      case TYPE_STRING:
+        if (m_table[i].flag)
+          delete[] * (char **) m_table[i].value;
 
-            case TYPE_BOOL:
-                 num = strtol(value, &s, 0);
+        *(char **) m_table[i].value = strdup (value);
+        if (!m_table[i].value)
+        {
+          log->logtofile ("Error: Out of memory!\n");
+          exit (1);
+        }
+        m_table[i].flag = 1;
+        return 1;
 
-                  if(num != 0 && num != 1)   //Is it 1/0 ? If not dont accept it (and dont flag)
-                     return 0;
+      case TYPE_BOOL:
+        num = strtol (value, &s, 0);
 
-                 *(int *)m_table[i].value = num;
-                 m_table[i].flag = 1;
-                 return 1;
+        if (num != 0 && num != 1)       //Is it 1/0 ? If not dont accept it (and dont flag)
+          return 0;
 
-         }
+        *(int *) m_table[i].value = num;
+        m_table[i].flag = 1;
+        return 1;
+
       }
-   }
+    }
+  }
 
-  return 0;   //No match
+  return 0;                     //No match
 }
