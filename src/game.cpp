@@ -471,7 +471,7 @@ Game::list_teams (char *target)
     return;
 
   char out[512];
-  char temp[512];
+
   int tcount = 0;
 
   for (ti * t = player->teams; t; t = t->next)
@@ -509,7 +509,10 @@ Game::list_players (char *target)
   pi *p = player->head;
 
   if (!p)
+  {
+    client->privmsg (target, "Empty (no one has scored any points yet)");
     return;
+  }
 
   int counter = 0;
 
