@@ -143,8 +143,8 @@ Question::load_question ()
     return 0;
 
   //Clean answers (strip non alphanumerics)
-  for (int i = 0; i < m_question.answers; i++)
-    parse->clean (m_question.answer[i]);
+  //  for (int i = 0; i < m_question.answers; i++)
+  //    parse->clean (m_question.answer[i]);
 
   in.close ();
   return 1;                     //No errors
