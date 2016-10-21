@@ -30,31 +30,13 @@
 
 using namespace std;
 
-#include <sys/types.h>
-
-
-
-#ifndef WIN32
+#include <fstream>
+#include <iostream>
 #include <netinet/in.h>
-#include <sys/socket.h>
 #include <netdb.h>
 #include <arpa/inet.h>
-#include <sys/wait.h>
 #include <string.h>
-#endif
-
-#ifdef WIN32
-#include <winsock2.h>
-#endif
-
-/* regex.h: On Windows, using MinGW32, I installed msys-libregex-dev
- * and dll package. I then had to use -I/MinGW32/msys/1.0/include to find
- * regex.h
- */
 #include <regex.h>
-
-#include <sys/time.h>
-#include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
 #include <strings.h>
@@ -62,17 +44,16 @@ using namespace std;
 #include <stdlib.h>
 #include <errno.h>
 #include <fcntl.h>
-
 #include <signal.h>
 #include <stdarg.h>
-
-
-#include <fstream>
-#include <iostream>
 #include <ctype.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "datatypes.h"
-
 #include "activity.h"
 #include "log.h"
 #include "options.h"
@@ -85,11 +66,15 @@ using namespace std;
 #include "config.h"
 
 #ifndef VERSION
-#define VERSION "0.8.21"
+#define VERSION "0.8.22-dev"
+#endif
+
+#ifndef PACKAGE_NAME
+#define PACKAGE_NAME "Blitzed IRC Trivia"
 #endif
 
 #ifndef PACKAGE_STRING
-#define PACKAGE_STRING "Blitzed IRC Trivia "VERSION
+#define PACKAGE_STRING PACKAGE_NAME" "VERSION
 #endif
 
 #endif /* #ifndef H_H */

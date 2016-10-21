@@ -144,10 +144,8 @@ int main(int argv, char *args[])
 srand ((unsigned) time (NULL));
 
 /* Prepare Alarm SIGNAL for timer */
-#ifndef WIN32
    signal(SIGALRM,do_alarm);
    alarm(BASETIME);
-#endif
 
 /*Pass control to Client class*/
    client.get_localhost();
@@ -159,10 +157,8 @@ srand ((unsigned) time (NULL));
    return 0;
 }
 
-#ifndef WIN32
 void do_alarm(int notused)
 {
    client.m_alarmed = 1;
    alarm(BASETIME);
 }
-#endif
