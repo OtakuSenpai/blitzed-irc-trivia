@@ -38,7 +38,7 @@ public:
   config_hash *m_table;
   int m_size;
 
-  int IRC_Port;
+  char *IRC_Port;
 
   char *IRC_Server;
   char *IRC_Channel;

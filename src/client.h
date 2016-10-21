@@ -1,14 +1,12 @@
 /*
- * client.h
+ * game.h
  *
  * Copyright (C) 2001  Erik Fears
  *
- * This is a fork of the original project
- * (http://harlequin.sourceforge.net/)
- *
  * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
+ *
  * This file is part of Blitzed IRC Trivia
- * (https://git.io/vicjS)
+ * (https://github.com/andy5995/blitzed-irc-trivia/wiki)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +23,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
  *
- *
  */
+
 
 #ifndef CLIENT_H
 #define CLIENT_H
@@ -95,7 +93,7 @@ public:
   void s (int priority, const char *data, ...);
   void sendq ();
   void init_socket ();
-  void connect_to (char *host, int port);
+  void connect_to (const char *host, const char *port);
   void close_socket ();
   void privmsg (char *target, const char *msg, ...);
   void notice (char *target, const char *msg, ...);

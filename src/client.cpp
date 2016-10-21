@@ -3,12 +3,10 @@
  *
  * Copyright (C) 2001  Erik Fears
  *
- * This is a fork of the original project
- * (http://harlequin.sourceforge.net/)
- *
  * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
+ *
  * This file is part of Blitzed IRC Trivia
- * (https://git.io/vicjS)
+ * (https://github.com/andy5995/blitzed-irc-trivia/wiki)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +22,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  *
  */
 
@@ -80,8 +77,6 @@ Client::get_localhost ()
   char *tmpip;
   char *tmpbyte;
 
-
-
   if (gethostname (m_localhostname, 256) != 0)
   {
     log->logtofile ("Error retrieving local hostname\n");
@@ -110,37 +105,55 @@ Client::get_localhost ()
     (bytes[3]);
 }
 
-
 void
-Client::connect_to (char *host, int port)
+Client::connect_to (const char *host, const char *port)
 {
+  struct addrinfo hints;
 
-  if (!(m_server_hostname = gethostbyname (host)))
+  memset (&hints, 0, sizeof (struct addrinfo));
+
+  hints.ai_family = AF_INET;    /* Allow IPv4 */
+  hints.ai_socktype = SOCK_STREAM;
+  hints.ai_flags = 0;           /* For wildcard IP address */
+  hints.ai_protocol = 0;        /* Any protocol */
+
+  fprintf (stderr, "host = %s\n", host);
+
+  struct addrinfo *result;
+  int state;
+  state = getaddrinfo (host, port, &hints, &result);
+  if (state != 0)
   {
+    perror ("connect_to:getaddrinfo");
     log->logtofile ("Failed resolving hostname\n");
     exit (1);
   }
 
-  m_server_addr.sin_family = AF_INET;
-  m_server_addr.sin_port = htons (port);
-  m_server_addr.sin_addr = *((struct in_addr *) m_server_hostname->h_addr);
-
-#ifndef WIN32
-  bzero (&(m_server_addr.sin_zero), 8);
-#endif
-
-  if (connect
-      (m_sockfd, (struct sockaddr *) &m_server_addr,
-       sizeof (struct sockaddr)) == -1)
+  m_sockfd = socket (result->ai_family, result->ai_socktype,
+                     result->ai_protocol);
+  if (m_sockfd == -1)
   {
-    log->logtofile ("Connection failed to %s port %d\n", host, port);
-    reconnect ();
-    return;
+    perror ("connect_to:sockfd");
+    log->logtofile ("Failed socket() to %s port %d\n", host, port);
+    exit (1);
   }
 
-  log->logtofile ("Connected to %s port %d\n", host, port);
+  state = connect (m_sockfd, result->ai_addr, result->ai_addrlen);
+  if (state == 0)
+  {
+    log->logtofile ("Connected to %s port %d\n", host, port);
+    do_register ();
+  }
+  else
+  {
+    perror ("connect_to:connect");
+    fprintf (stderr, "%d state\n", state);
+    log->logtofile ("Connection failed to %s port %d\n", host, port);
+    exit (1);
+  }
 
-  do_register ();
+  freeaddrinfo (result);
+
 }
 
 void
@@ -334,8 +347,7 @@ Client::do_register ()
 {
   s (100, "NICK %s", config->CLIENT_Nick);
   s (100, "USER %s \"%s\" %s :%s", config->CLIENT_Username,
-     config->CLIENT_Username, config->CLIENT_Username,
-     PACKAGE_STRING);
+     config->CLIENT_Username, config->CLIENT_Username, PACKAGE_STRING);
 
 }
 
@@ -583,8 +595,7 @@ Client::ignore_load ()
 
   if (in.fail ())
   {
-    log->
-      logtofile
+    log->logtofile
       ("Error opening ignore state file for read. (Might not exist)");
     return;
   }
@@ -770,7 +781,8 @@ Client::do_ctcp (source_struct * source, char *target, char *msg)
 
 
   if (!strcasecmp (ctcp, "VERSION"))
-    s (5, "NOTICE %s :\001VERSION %s %s\001", source->nick, PACKAGE_NAME, VERSION);
+    s (5, "NOTICE %s :\001VERSION %s %s\001", source->nick, PACKAGE_NAME,
+       VERSION);
 
   if (!ctcp2)
     return;

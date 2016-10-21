@@ -43,7 +43,7 @@ Question question;
 
 config_hash table[] = {
       { "IRC_Server"              ,  TYPE_STRING  ,0,   &(config.IRC_Server)               },
-      { "IRC_Port"                ,  TYPE_INT     ,0,   &(config.IRC_Port)                 },
+      { "IRC_Port"                ,  TYPE_STRING  ,0,   &(config.IRC_Port)                 },
       { "IRC_Channel"             ,  TYPE_STRING  ,0,   &(config.IRC_Channel)              },
       { "CLIENT_Nick"             ,  TYPE_STRING  ,0,   &(config.CLIENT_Nick)              },
       { "CLIENT_Username"         ,  TYPE_STRING  ,0,   &(config.CLIENT_Username)          },
@@ -148,8 +148,8 @@ srand ((unsigned) time (NULL));
    alarm(BASETIME);
 
 /*Pass control to Client class*/
-   client.get_localhost();
-   client.init_socket();
+   /* client.get_localhost(); */
+   /* client.init_socket(); */
    client.connect_to(config.IRC_Server , config.IRC_Port);
    client.ignore_load();
    client.begin();
