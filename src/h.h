@@ -3,12 +3,10 @@
  *
  * Copyright (C) 2001  Erik Fears
  *
- * This is a fork of the original project
- * (http://harlequin.sourceforge.net/)
- *
  * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
+ *
  * This file is part of Blitzed IRC Trivia
- * (https://git.io/vicjS)
+ * (https://github.com/andy5995/blitzed-irc-trivia/wiki)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +23,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
  *
- *
  */
 
 #ifndef H_H
@@ -34,23 +31,41 @@
 using namespace std;
 
 #include <sys/types.h>
+
+
+
+#ifndef WIN32
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <netdb.h>
+#include <arpa/inet.h>
+#include <sys/wait.h>
+#include <string.h>
+#endif
+
+#ifdef WIN32
+#include <winsock2.h>
+#endif
+
+/* regex.h: On Windows, using MinGW32, I installed msys-libregex-dev
+ * and dll package. I then had to use -I/MinGW32/msys/1.0/include to find
+ * regex.h
+ */
+#include <regex.h>
+
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
-#include <string.h>
+#include <strings.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <sys/wait.h>
 #include <fcntl.h>
-#include <arpa/inet.h>
+
 #include <signal.h>
 #include <stdarg.h>
-#include <regex.h>
+
 
 #include <fstream>
 #include <iostream>
