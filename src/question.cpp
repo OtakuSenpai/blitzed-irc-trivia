@@ -54,7 +54,6 @@ Question::load_question ()
 {
   ifstream in;
 
-  char out[1024];
   int rand_line = 0;
 
   questions ();                 //Recount questions if needed
@@ -85,10 +84,9 @@ Question::load_question ()
   }
 
   in.open (config->GAME_DB, ios::in);
-
   if (in.fail ())
   {
-    printf ("Error while opening %s\n", config->GAME_DB);
+    fprintf (stderr, "Error while opening %s\n", config->GAME_DB);
     return -1;
   }
 
@@ -126,6 +124,17 @@ Question::load_question ()
   if (!m_question.question)
     return 0;
 
+  if (strncasecmp (m_question.question, "word scramble: ",
+      strlen ("word scramble:")) == 0)
+  {
+    char *ptr = &m_question.question[0];
+    ptr += strlen ("word scramble: ");
+    char temp[QUESTIONMAX];
+    strcpy (temp, ptr);
+    strcat (temp, ": Unscramble It");
+    strcpy (m_question.question, temp);
+  }
+
   for (int i = 0; i < m_question.answers; i++)
   {
     m_question.answer[i] = strtok (NULL, ";");
@@ -147,6 +156,11 @@ Question::load_question ()
   //    parse->clean (m_question.answer[i]);
 
   in.close ();
+  if (in.fail())
+  {
+    fprintf (stderr, "Error while closing %s\n", config->GAME_DB);
+    return -1;
+  }
   return 1;                     //No errors
 }
 
@@ -156,7 +170,6 @@ Question::questions ()
   ifstream in;
   struct stat filestats;
 
-  int num_lines = 0;
   char temp[1024];
 
   //Check to see if we already have current information on the DB
