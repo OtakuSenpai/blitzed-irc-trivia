@@ -2,9 +2,6 @@ TODO:
 
 -- v0.9
 
-   HASH Table Commands (strtok)
-   Question loading code needs more error checking (strtok)
-   Database Integrity Tool (strtok)
    Better way to identify admin than the current way!
 
 --- Other ideas
