@@ -6,7 +6,7 @@ developed in about 16 years.
 Blitzed IRC Trivia is an IRC bot that will connect to a server, join a
 channel, and ask trivia questions. Allows team or single-play, can use a
 phonetic pattern-matching algorithm (answers don't need to be exact),
-and has many other options. Originally developed by Eric Fears, this
+and has many other options. Originally developed by EriK Fears, this
 project is now maintained by Andy Alt (not affiliated with the Blitzed
 IRC Network)
 
@@ -18,9 +18,6 @@ file io.
 Blitzed IRC Trivia web page
 https://github.com/andy5995/blitzed-irc-trivia/wiki
 
-Any questions about installation and configuring can be sent to
-andy400-dev@yahoo.com or using the contact methods listed on the home page.
-
 This README is based from current development. To view the README from the
 last release, use the link below.
 https://github.com/andy5995/blitzed-irc-trivia/blob/v0.8.21/README
@@ -31,16 +28,46 @@ be made to your existing installation of Blitzed, if any.
 INSTALLATION
 ------------
 
-          - Run Configure (./configure)
-          - make
-          - ./src/trivia trivia.conf.sample
+          `trivia` binary (`trivia.exe` on Windows):
+              must be in the same directory as the three CygWin DLL files.
 
-   Note: It will compile the binary program to ./src/trivia. You can
-         move this file, your trivia.conf file and your question.db
-         file to any directory of your choice to run the bot in.
+          trivia.conf.sample:
+              You may use multiple configurations by making a copy of the
+              trivia configuration file (i.e., run multiple instances of
+              'trivia', each one can connect to a different server or
+              channel).
 
-         The question database MUST be in the same directory from which
-         'trivia' run.
+              Specify which configuration you'd like to use during run-time
+              example1: "trivia.exe trivia.freenode.conf"
+              example2: "trivia.exe trivia.conf"
+
+          questions.db:
+              The question database MUST be in the same directory from which
+              you run the 'trivia' binary
+
+          trivia.log:
+              will be created in the same directory from which you run
+              the `trivia` binary
+
+BUILDING
+--------
+
+        A Windows exe/binary is included with the Blitzed IRC package, so
+        most Windows users will not have to build their own copy - they can
+        simply use the exe provided. If you'd like to build your own copy,
+        I suggest using the CygWin build environment. If you have any
+        questions, feel free to get in touch with me by way of the contact
+        methods on the home page.
+
+        ./configure
+        make
+
+        The binary will be placed in ./src and can be moved or copied to
+        the top level where the questions.db and trivia.configuration sample
+        are located.
+
+        Make install is not implemented. See the instructions above for
+        where the files should be placed.
 
 
 COMMANDS
@@ -85,7 +112,6 @@ COMMANDS
                           -host <remove regexp host from ignore list>
                    If no command is given, the list of ignores
                    currently in place will be given.
-
 
 
 QUESTION.DB
@@ -149,4 +175,4 @@ HOW ANSWER MATCHING WORKS
     vowels.
 
 
-    This file last updated 2016-10-08
+    This file last updated 2016-10-21
