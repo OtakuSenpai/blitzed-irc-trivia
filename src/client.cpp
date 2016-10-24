@@ -28,7 +28,6 @@
 
 #include "h.h"
 
-
 Client::Client ()
 {
   m_sockfd = 0;
@@ -45,6 +44,7 @@ Client::~Client ()
 {
 }
 
+/* Is this still needed? */
 void
 Client::get_localhost ()
 {
@@ -93,43 +93,54 @@ Client::connect_to (const char *host, const char *port)
   hints.ai_flags = 0;           /* For wildcard IP address */
   hints.ai_protocol = 0;        /* Any protocol */
 
-  fprintf (stderr, "host = %s\n", host);
-
   struct addrinfo *result;
   int state;
   state = getaddrinfo (host, port, &hints, &result);
-  if (state != 0)
+  if (state == 0)
   {
-    perror ("connect_to:getaddrinfo");
+    const char *success_msg = "%s: Successfully got address information\n";
+    fprintf (stdout, success_msg, host);
+    log->logtofile (success_msg, host);
+  }
+  else
+  {
+    fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(state));
     log->logtofile ("Failed resolving hostname\n");
-    exit (1);
+    exit (EXIT_FAILURE);
   }
 
   m_sockfd = socket (result->ai_family, result->ai_socktype,
                      result->ai_protocol);
-  if (m_sockfd == -1)
+  if (m_sockfd != -1)
   {
-    perror ("connect_to:sockfd");
+    const char *success_msg = "%s: Successfully opened socket\n";
+    fprintf (stdout, success_msg, host);
+    log->logtofile (success_msg, host);
+  }
+  else
+  {
+    perror ("socket");
     log->logtofile ("Failed socket() to %s port %d\n", host, port);
-    exit (1);
+    exit (EXIT_FAILURE);
   }
 
   state = connect (m_sockfd, result->ai_addr, result->ai_addrlen);
   if (state == 0)
   {
-    log->logtofile ("Connected to %s port %d\n", host, port);
+    const char *success_msg = "Successfully connected to %s:%s\n";
+    fprintf (stdout, success_msg, host, port);
+    log->logtofile (success_msg, host, port);
     do_register ();
   }
   else
   {
-    perror ("connect_to:connect");
-    fprintf (stderr, "%d state\n", state);
-    log->logtofile ("Connection failed to %s port %d\n", host, port);
-    exit (1);
+    const char *fail_msg = "Failed connection to %s:%s\n";
+    fprintf (stderr, fail_msg, host, port);
+    log->logtofile (fail_msg, host, port);
+    exit (EXIT_FAILURE);
   }
 
   freeaddrinfo (result);
-
 }
 
 void
@@ -153,13 +164,10 @@ Client::reconnect ()
 void
 Client::begin ()
 {
-
   int retval;
 
   while (1)
   {
-
-
     FD_ZERO (&m_fdset);
     FD_SET (m_sockfd, &m_fdset);
 
@@ -187,14 +195,11 @@ Client::begin ()
     }
 
   }
-
-
 }
 
 void
 Client::s (int priority, const char *data, ...)
 {
-
   va_list arglist;
   char data2[1024];
   char tosend[1024];
@@ -385,15 +390,12 @@ Client::parse_line (char *line)
 
   if (first[0] == ':')
   {
-
     if (ignore_check (first))   //Check against ignore list before parsing anything
       return;                   //Drop data completely
 
     source = parse->get_source (first);
     if (!source)
       return;
-
-
 
     if (first && second)
     {
@@ -406,7 +408,6 @@ Client::parse_line (char *line)
       if (!strcmp (second, "KICK"))
         parse_kick (source, line);
     }
-
   }
 
   if (!second)
@@ -436,11 +437,9 @@ Client::parse_newnick (source_struct * source, char *line)
   game->do_newnick (source, line);
 }
 
-
 void
 Client::parse_part (source_struct * source, char *line)
 {
-
   char *target = strtok (line, " ");
 
   if (!target)
@@ -450,7 +449,6 @@ Client::parse_part (source_struct * source, char *line)
 void
 Client::parse_privmsg (source_struct * source, char *line)
 {
-
   char *target;
   char *msg;
 
@@ -471,7 +469,6 @@ Client::parse_privmsg (source_struct * source, char *line)
     do_ctcp (source, target, msg);
     return;
   }
-
 
   if (!strcasecmp (target, config->IRC_Channel))
     game->do_channel (source, target, msg);
@@ -500,7 +497,6 @@ Client::parse_privmsg (source_struct * source, char *line)
 int
 Client::ignore_check (char *mask)
 {
-
   regex_t re;
 
   if (!ignore)
@@ -523,13 +519,11 @@ Client::ignore_check (char *mask)
   }
 
   return (0);
-
 }
 
 void
 Client::ignore_save ()
 {
-
   ofstream out;
   int count = 0;
   int length;
@@ -606,8 +600,8 @@ Client::ignore_load ()
 
   }
 
+/* FIXME: add error check and action */
   in.close ();
-
 }
 
 
@@ -620,14 +614,11 @@ Client::do_ignore (source_struct * source, char *args)
   password = strtok (args, " ");
   rest = strtok (NULL, "");
 
-
-
   if (!password || strcmp (password, config->CLIENT_AdminPass))
   {
     notice (source->nick, "Incorrect Password.");
     return;
   }
-
 
   //No arguments, list ignores
   if (!rest || strlen (rest) <= 2)
@@ -655,7 +646,6 @@ Client::do_ignore (source_struct * source, char *args)
 void
 Client::ignore_list (source_struct * source)
 {
-
   int i = 0;
 
   if (!ignore)
@@ -676,12 +666,10 @@ Client::ignore_list (source_struct * source)
 void
 Client::ignore_add (source_struct * source, char *mask)
 {
-
   ignore_struct *link;
   link = new ignore_struct;
   link->mask = strdup (mask);
   link->next = 0;
-
 
   //Link to ignore list
   if (!ignore)
@@ -708,7 +696,6 @@ Client::ignore_add (source_struct * source, char *mask)
 void
 Client::ignore_del (source_struct * source, char *mask)
 {
-
   ignore_struct *prev = 0;
 
   for (ignore_struct * is = ignore; is; is = is->next)
@@ -737,9 +724,6 @@ Client::ignore_del (source_struct * source, char *mask)
   notice (source->nick, "Entry not found in ignore list.");
 }
 
-
-
-
 void
 Client::do_ctcp (source_struct * source, char *target, char *msg)
 {
@@ -750,10 +734,8 @@ Client::do_ctcp (source_struct * source, char *target, char *msg)
   char *ctcp = strtok (msg1, " ");      /* the first ctcp argument */
   char *ctcp2 = strtok (NULL, "");      /* Second argument if it exists */
 
-
   if (!ctcp)
     return;
-
 
   if (!strcasecmp (ctcp, "VERSION"))
     s (5, "NOTICE %s :\001VERSION %s %s\001", source->nick, PACKAGE_NAME,
@@ -764,11 +746,7 @@ Client::do_ctcp (source_struct * source, char *target, char *msg)
 
   if (!strcasecmp (ctcp, "PING"))
     s (5, "NOTICE %s :\001PING %s\001", source->nick, ctcp2);
-
-
 }
-
-
 
 void
 Client::alarm ()
@@ -806,7 +784,6 @@ Client::alarm ()
     }
 
   }
-
 
   //Send next two items in the queue
   sendq ();
