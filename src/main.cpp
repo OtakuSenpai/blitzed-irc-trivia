@@ -149,7 +149,6 @@ srand ((unsigned) time (NULL));
 
 /*Pass control to Client class*/
    /* client.get_localhost(); */
-   /* client.init_socket(); */
    client.connect_to(config.IRC_Server , config.IRC_Port);
    client.ignore_load();
    client.begin();

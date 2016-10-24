@@ -92,7 +92,6 @@ public:
 /* Client Actions */
   void s (int priority, const char *data, ...);
   void sendq ();
-  void init_socket ();
   void connect_to (const char *host, const char *port);
   void close_socket ();
   void privmsg (char *target, const char *msg, ...);

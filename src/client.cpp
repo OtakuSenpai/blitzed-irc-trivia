@@ -46,32 +46,8 @@ Client::~Client ()
 }
 
 void
-Client::init_socket ()
-{
-
-  if (m_sockfd != 0)
-    close (m_sockfd);
-
-  m_sockfd = 0;
-  m_status.registered = 0;
-
-#ifndef WIN32
-  bzero (&(m_server_addr.sin_zero), 8);
-#endif
-
-  if ((m_sockfd = socket (AF_INET, SOCK_STREAM, 0)) == -1)
-  {
-    log->logtofile ("Socket initialisation failed\n");
-    exit (1);
-  }
-
-  log->logtofile ("Socket initialised%d\n", m_sockfd);
-}
-
-void
 Client::get_localhost ()
 {
-
   int i;
   int bytes[4];
   char *tmpip;
@@ -171,7 +147,6 @@ Client::reconnect ()
   log->logtofile ("Reconnecting...\n");
   close_socket ();
   sleep (5);
-  init_socket ();
   connect_to (config->IRC_Server, config->IRC_Port);
 }
 
