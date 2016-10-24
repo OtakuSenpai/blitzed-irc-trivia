@@ -3,12 +3,10 @@
  *
  * Copyright (C) 2001  Erik Fears
  *
- * This is a fork of the original project
- * (http://harlequin.sourceforge.net/)
- *
  * Copyright (C) 2016  Andy Alt (andy400-dev@yahoo.com)
+ *
  * This file is part of Blitzed IRC Trivia
- * (https://git.io/vicjS)
+ * (https://github.com/andy5995/blitzed-irc-trivia/wiki)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +23,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
  *
- *
  */
+
 
 #include "h.h"
 
-void do_alarm(int);
-
+void do_alarm (int);
 
 Client client;
 Game game;
@@ -42,122 +39,123 @@ Config config;
 Question question;
 
 config_hash table[] = {
-      { "IRC_Server"              ,  TYPE_STRING  ,0,   &(config.IRC_Server)               },
-      { "IRC_Port"                ,  TYPE_STRING  ,0,   &(config.IRC_Port)                 },
-      { "IRC_Channel"             ,  TYPE_STRING  ,0,   &(config.IRC_Channel)              },
-      { "CLIENT_Nick"             ,  TYPE_STRING  ,0,   &(config.CLIENT_Nick)              },
-      { "CLIENT_Username"         ,  TYPE_STRING  ,0,   &(config.CLIENT_Username)          },
-      { "CLIENT_TIME_Timeout"     ,  TYPE_INT     ,0,   &(config.CLIENT_TIME_Timeout)      },
-      { "CLIENT_AdminPass"        ,  TYPE_STRING  ,0,   &(config.CLIENT_AdminPass)         },
-      { "GAME_DB"                 ,  TYPE_STRING  ,0,   &(config.GAME_DB)                  },
-      { "GAME_Points"             ,  TYPE_INT     ,0,   &(config.GAME_Points)              },
-      { "GAME_BasePoints"         ,  TYPE_INT     ,0,   &(config.GAME_BasePoints)          },
-      { "GAME_TimeWise"           ,  TYPE_BOOL    ,0,   &(config.GAME_TimeWise)            },
-      { "GAME_UseTeams"           ,  TYPE_BOOL    ,0,   &(config.GAME_UseTeams)            },
-      { "GAME_NumTeams"           ,  TYPE_INT     ,0,   &(config.GAME_NumTeams)            },
-      { "GAME_ACTIVITY_Enabled"   ,  TYPE_BOOL    ,0,   &(config.GAME_ACTIVITY_Enabled)    },
-      { "GAME_ACTIVITY_Count"     ,  TYPE_INT     ,0,   &(config.GAME_ACTIVITY_Count)      },
-      { "GAME_ACTIVITY_Time"      ,  TYPE_INT     ,0,   &(config.GAME_ACTIVITY_Time)       },
-      { "GAME_HintRatio"          ,  TYPE_INT     ,0,   &(config.GAME_HintRatio)           },
-      { "GAME_UseHint"            ,  TYPE_BOOL    ,0,   &(config.GAME_UseHint)             },
-      { "GAME_MinHint"            ,  TYPE_INT     ,0,   &(config.GAME_MinHint)             },
-      { "GAME_ShowAnswer"         ,  TYPE_BOOL    ,0,   &(config.GAME_ShowAnswer)          },
-      { "GAME_TIME_Timeout"       ,  TYPE_INT     ,0,   &(config.GAME_TIME_Timeout)        },
-      { "GAME_TIME_StartDelay"    ,  TYPE_INT     ,0,   &(config.GAME_TIME_StartDelay)     },
-      { "GAME_TIME_QuestionDelay" ,  TYPE_INT     ,0,   &(config.GAME_TIME_QuestionDelay)  },
-      { "GAME_TIME_GiveHint"      ,  TYPE_INT     ,0,   &(config.GAME_TIME_GiveHint)       },
-      { "GAME_SaveState"          ,  TYPE_INT     ,0,   &(config.GAME_SaveState)           },
-      { "LOG_FromServer"          ,  TYPE_BOOL    ,0,   &(config.LOG_FromServer)           },
-      { "TEXT_GAME_Newplayer"     ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Newplayer)      },
-      { "TEXT_GAME_Notplayer"     ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Notplayer)      },
-      { "TEXT_GAME_Listhead"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Listhead)       },
-      { "TEXT_GAME_Listtail"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Listtail)       },
-      { "TEXT_GAME_Correct_Answer",  TYPE_STRING  ,0,   &(config.TEXT_GAME_Correct_Answer) },
-      { "TEXT_GAME_Winmsg"        ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Winmsg)         },
-      { "TEXT_GAME_Question"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Question)       },
-      { "TEXT_GAME_Timeout"       ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Timeout)        },
-      { "TEXT_GAME_Start"         ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Start)          },
-      { "TEXT_GAME_Settings"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Settings)       },
-      { "TEXT_GAME_Toosmall"      ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Toosmall)       },
-      { "TEXT_GAME_Hint"          ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Hint)           },
-      { "TEXT_GAME_Timeout_Show"  ,  TYPE_STRING  ,0,   &(config.TEXT_GAME_Timeout_Show)   },
+  {"IRC_Server", TYPE_STRING, 0, &(config.IRC_Server)},
+  {"IRC_Port", TYPE_STRING, 0, &(config.IRC_Port)},
+  {"IRC_Channel", TYPE_STRING, 0, &(config.IRC_Channel)},
+  {"CLIENT_Nick", TYPE_STRING, 0, &(config.CLIENT_Nick)},
+  {"CLIENT_Username", TYPE_STRING, 0, &(config.CLIENT_Username)},
+  {"CLIENT_TIME_Timeout", TYPE_INT, 0, &(config.CLIENT_TIME_Timeout)},
+  {"CLIENT_AdminPass", TYPE_STRING, 0, &(config.CLIENT_AdminPass)},
+  {"GAME_DB", TYPE_STRING, 0, &(config.GAME_DB)},
+  {"GAME_Points", TYPE_INT, 0, &(config.GAME_Points)},
+  {"GAME_BasePoints", TYPE_INT, 0, &(config.GAME_BasePoints)},
+  {"GAME_TimeWise", TYPE_BOOL, 0, &(config.GAME_TimeWise)},
+  {"GAME_UseTeams", TYPE_BOOL, 0, &(config.GAME_UseTeams)},
+  {"GAME_NumTeams", TYPE_INT, 0, &(config.GAME_NumTeams)},
+  {"GAME_ACTIVITY_Enabled", TYPE_BOOL, 0, &(config.GAME_ACTIVITY_Enabled)},
+  {"GAME_ACTIVITY_Count", TYPE_INT, 0, &(config.GAME_ACTIVITY_Count)},
+  {"GAME_ACTIVITY_Time", TYPE_INT, 0, &(config.GAME_ACTIVITY_Time)},
+  {"GAME_HintRatio", TYPE_INT, 0, &(config.GAME_HintRatio)},
+  {"GAME_UseHint", TYPE_BOOL, 0, &(config.GAME_UseHint)},
+  {"GAME_MinHint", TYPE_INT, 0, &(config.GAME_MinHint)},
+  {"GAME_ShowAnswer", TYPE_BOOL, 0, &(config.GAME_ShowAnswer)},
+  {"GAME_TIME_Timeout", TYPE_INT, 0, &(config.GAME_TIME_Timeout)},
+  {"GAME_TIME_StartDelay", TYPE_INT, 0, &(config.GAME_TIME_StartDelay)},
+  {"GAME_TIME_QuestionDelay", TYPE_INT, 0, &(config.GAME_TIME_QuestionDelay)},
+  {"GAME_TIME_GiveHint", TYPE_INT, 0, &(config.GAME_TIME_GiveHint)},
+  {"GAME_SaveState", TYPE_INT, 0, &(config.GAME_SaveState)},
+  {"LOG_FromServer", TYPE_BOOL, 0, &(config.LOG_FromServer)},
+  {"TEXT_GAME_Newplayer", TYPE_STRING, 0, &(config.TEXT_GAME_Newplayer)},
+  {"TEXT_GAME_Notplayer", TYPE_STRING, 0, &(config.TEXT_GAME_Notplayer)},
+  {"TEXT_GAME_Listhead", TYPE_STRING, 0, &(config.TEXT_GAME_Listhead)},
+  {"TEXT_GAME_Listtail", TYPE_STRING, 0, &(config.TEXT_GAME_Listtail)},
+  {"TEXT_GAME_Correct_Answer", TYPE_STRING, 0,
+   &(config.TEXT_GAME_Correct_Answer)},
+  {"TEXT_GAME_Winmsg", TYPE_STRING, 0, &(config.TEXT_GAME_Winmsg)},
+  {"TEXT_GAME_Question", TYPE_STRING, 0, &(config.TEXT_GAME_Question)},
+  {"TEXT_GAME_Timeout", TYPE_STRING, 0, &(config.TEXT_GAME_Timeout)},
+  {"TEXT_GAME_Start", TYPE_STRING, 0, &(config.TEXT_GAME_Start)},
+  {"TEXT_GAME_Settings", TYPE_STRING, 0, &(config.TEXT_GAME_Settings)},
+  {"TEXT_GAME_Toosmall", TYPE_STRING, 0, &(config.TEXT_GAME_Toosmall)},
+  {"TEXT_GAME_Hint", TYPE_STRING, 0, &(config.TEXT_GAME_Hint)},
+  {"TEXT_GAME_Timeout_Show", TYPE_STRING, 0,
+   &(config.TEXT_GAME_Timeout_Show)},
 };
 
-
-int main(int argv, char *args[])
+int
+main (int argv, char *args[])
 {
-
-
-   ofstream pidout;
-   int pid;
+  ofstream pidout;
+  int pid;
 
 /* Interclass access */
 
-   client.game   = &game;
-   client.parse  = &parse;
-   client.log    = &log;
-   client.config = &config;
+  client.game = &game;
+  client.parse = &parse;
+  client.log = &log;
+  client.config = &config;
 
-   game.parse    = &parse;
-   game.client   = &client;
-   game.log      = &log;
-   game.player   = &player;
-   game.config   = &config;
-   game.question = &question;
+  game.parse = &parse;
+  game.client = &client;
+  game.log = &log;
+  game.player = &player;
+  game.config = &config;
+  game.question = &question;
 
-   player.config = &config;
+  player.config = &config;
 
-   question.config = &config;
-   question.parse  = &parse;
+  question.config = &config;
+  question.parse = &parse;
 
-   config.log    = &log;
+  config.log = &log;
 
 /* Check command line args */
 
-  if(argv != 2)
-   {
-      printf("Syntax: trivia config_file\n");
-      return 0;
-   }
-
-
+  if (argv != 2)
+  {
+    printf ("Syntax: trivia config_file\n");
+    return 0;
+  }
 
 /* Background */
+/* When built with CygWin, trivia.exe forks. It may be okay to remove
+ * the #define from options.h */
 #ifndef WIN32
-   if ((pid = fork()))
-    {
-       pidout.open("trivia.pid", ios::out);
-       if(!pidout.fail())
-            pidout << pid;
-       pidout.close();
-       exit(0);
-    }
+  if ((pid = fork ()))
+  {
+    pidout.open ("trivia.pid", ios::out);
+    if (!pidout.fail ())
+      pidout << pid;
+    pidout.close ();
+    exit (0);
+  }
 #endif /* ifndef WIN32 */
 
 /* Load config via table */
-   config.m_table = table;
-   config.m_size = (sizeof(table) / sizeof(config_hash));
-   if(!config.load(args[1]))
-      exit(1);
+  config.m_table = table;
+  config.m_size = (sizeof (table) / sizeof (config_hash));
+  if (!config.load (args[1]))
+    exit (1);
 
 /* Seed random number generator */
-srand ((unsigned) time (NULL));
+  srand ((unsigned) time (NULL));
 
 /* Prepare Alarm SIGNAL for timer */
-   signal(SIGALRM,do_alarm);
-   alarm(BASETIME);
+  signal (SIGALRM, do_alarm);
+  alarm (BASETIME);
 
 /*Pass control to Client class*/
-   /* client.get_localhost(); */
-   client.connect_to(config.IRC_Server , config.IRC_Port);
-   client.ignore_load();
-   client.begin();
+  /* client.get_localhost(); */
+  client.connect_to (config.IRC_Server, config.IRC_Port);
+  client.ignore_load ();
+  client.begin ();
 
-   return 0;
+  return 0;
 }
 
-void do_alarm(int notused)
+void
+do_alarm (int notused)
 {
-   client.m_alarmed = 1;
-   alarm(BASETIME);
+  client.m_alarmed = 1;
+  alarm (BASETIME);
 }
