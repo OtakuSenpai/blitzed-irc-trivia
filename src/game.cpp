@@ -392,14 +392,11 @@ Game::do_set (source_struct * source, char *args)
   char *nick, *value;
   int nvalue;
 
-  pi *p;
-
   nick = value = 0;
   nvalue = 0;
 
   nick = strtok (args, " ");
   value = strtok (NULL, "");
-
 
   if (!nick || !value || !m_status.active)
     return;
@@ -408,7 +405,6 @@ Game::do_set (source_struct * source, char *args)
 
   if (nvalue < 1)
   {
-
     if (player->is_player (nick))
     {
       player->del_player (nick);
@@ -420,11 +416,9 @@ Game::do_set (source_struct * source, char *args)
   }
   //Get player or create if they dont already exist
   if (player->is_player (nick))
-    p = player->find_pi (nick);
+    player->find_pi (nick);
   else
-  {
-    p = player->find_pi (nick);
-  }
+    player->find_pi (nick);
 
   player->set_point (nick, nvalue);     //Set their points
   client->privmsg (source->nick, "%s set to %d points.", nick, nvalue);

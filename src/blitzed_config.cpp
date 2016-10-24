@@ -63,7 +63,8 @@ Config::load (char *file)
   }
   while (!in.eof ());
 
-  for (int i = 0; i < m_size; i++)
+  int i;
+  for (i = 0; i < m_size; i++)
   {
     if (!(m_table[i].flag))
     {
@@ -89,8 +90,6 @@ Config::parse_entry (char *entry)
 {
   int num;
   char *variable, *value, *s = NULL;
-  int i;
-  i = 0;
 
   if (!entry)
     return 0;
@@ -105,13 +104,11 @@ Config::parse_entry (char *entry)
   if (!value)
     return 0;
 
-  for (int i = 0; i < m_size; i++)
+  int i = 0;
+  for (i = 0; i < m_size; i++)
   {
     if (!strcasecmp (m_table[i].name, variable))
     {
-#ifdef DEBUG
-      log->logtofile ("Loading... %s=%s\n", m_table[i].name, value);
-#endif
       switch (m_table[i].type)
       {
       case TYPE_INT:
